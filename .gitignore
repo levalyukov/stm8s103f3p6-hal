@@ -1,0 +1,12 @@
+*~
+\#*\#
+.\#*
+*.asm
+*.lst
+*.rel
+*.rst
+*.sym
+*.ihx
+*.lk
+*.map
+build/
