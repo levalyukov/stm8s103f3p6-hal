@@ -1,8 +1,7 @@
 #include "spi.h"
 
-error_t spi_init(const spi_mode_t mode,
-                     const spi_baud_rate_t baud,
-                     const spi_frame_format_t frame)
+error_t spi_init(const spi_mode_t mode, const spi_baud_rate_t baud,
+                 const spi_frame_format_t frame)
 {
     check(!(SPI->CR1 & (1 << 6)), FAIL);
     check(SPI_MODE_IS_OK(mode), INVALID_ARG);
@@ -34,9 +33,8 @@ error_t spi_disable(void)
     return OK;
 }
 
-error_t spi_send(const spi_device_t *device,
-                     const spi_transaction_t type,
-                     const unsigned char data)
+error_t spi_send(const spi_device_t *device, const spi_transaction_t type,
+                 const unsigned char data)
 {
     check(device, FAIL);
     check(SPI->CR1 & (1 << 6), FAIL);
@@ -67,11 +65,13 @@ void spi_deinit(void)
     SPI->TXCRCR = 0xFF;
 }
 
-unsigned char spi_read(const spi_device_t* device, const unsigned char data) {
-  check(device, FAIL);
-  check(SPI->CR1 & (1 << 6), FAIL);
-  
-  SPI->DR = data;
-  
-  return SPI->DR;
+unsigned char spi_read(const spi_device_t *device,
+                       const unsigned char data)
+{
+    check(device, FAIL);
+    check(SPI->CR1 & (1 << 6), FAIL);
+
+    SPI->DR = data;
+
+    return SPI->DR;
 }

@@ -1,7 +1,7 @@
 #include "gpio.h"
 
 error_t gpio_level_set(gpio_t *gpio, const unsigned char pin,
-                           const gpio_level_t level)
+                       const gpio_level_t level)
 {
     check(GPIO_PIN_IS_OK(pin), INVALID_ARG);
     check(GPIO_LEVEL_IS_OK(level), INVALID_ARG);
@@ -14,9 +14,8 @@ error_t gpio_level_set(gpio_t *gpio, const unsigned char pin,
     return OK;
 }
 
-error_t gpio_direction_set(gpio_t *gpio,
-                               const unsigned char pin,
-                               const gpio_direction_t direction)
+error_t gpio_direction_set(gpio_t *gpio, const unsigned char pin,
+                           const gpio_direction_t direction)
 {
     check(GPIO_PIN_IS_OK(pin), INVALID_ARG);
     check(GPIO_DIRECTION_IS_OK(direction), INVALID_ARG);
@@ -30,10 +29,9 @@ error_t gpio_direction_set(gpio_t *gpio,
     return OK;
 }
 
-error_t
-gpio_input_config_set(gpio_t *gpio, const unsigned char pin,
-                      const gpio_input_config_t value_1,
-                      const gpio_input_config_t value_2)
+error_t gpio_input_config_set(gpio_t *gpio, const unsigned char pin,
+                              const gpio_input_config_t value_1,
+                              const gpio_input_config_t value_2)
 {
     check(GPIO_PIN_IS_OK(pin), INVALID_ARG);
     check(!gpio->ODR & (1 << pin), FAIL);
@@ -52,10 +50,9 @@ gpio_input_config_set(gpio_t *gpio, const unsigned char pin,
     return OK;
 }
 
-error_t
-gpio_output_config_set(gpio_t *gpio, const unsigned char pin,
-                       const gpio_output_config_t value_1,
-                       const gpio_output_config_t value_2)
+error_t gpio_output_config_set(gpio_t *gpio, const unsigned char pin,
+                               const gpio_output_config_t value_1,
+                               const gpio_output_config_t value_2)
 {
     check(GPIO_PIN_IS_OK(pin), INVALID_ARG);
     check(!(gpio->IDR & (1 << pin)), FAIL);

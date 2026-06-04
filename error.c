@@ -28,8 +28,7 @@ void error_signal_start(void)
 
 static void error_pin_reset(void)
 {
-    gpio_t *GPIOS[6] = {GPIO_A, GPIO_B, GPIO_C,
-                        GPIO_D, GPIO_E, GPIO_F};
+    gpio_t *GPIOS[6] = {GPIO_A, GPIO_B, GPIO_C, GPIO_D, GPIO_E, GPIO_F};
 
     {
         char i;

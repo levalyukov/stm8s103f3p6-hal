@@ -15,6 +15,7 @@ Tools
 * Compilier : SDCC (Small Device C Compilier) with pedantics flags
 * Build : Makefile, program ST-LINK V2, stm8sflash software
 * Text Editor : Emacs
+* Coding Style : clang-format
 
 
 What implemented?

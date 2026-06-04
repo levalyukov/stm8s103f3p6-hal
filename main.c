@@ -1,5 +1,5 @@
-#include "gpio.h"
 #include "error.h"
+#include "gpio.h"
 #include "mcu_pins_layout.h"
 #include "spi.h"
 #include "st7735s.h"
@@ -7,11 +7,7 @@
 error_t main(void)
 {
     spi_device_t device = {
-        .gpio_cs = GPIO_D,
-	.gpio_dc = GPIO_D,
-	.cs = 5,
-	.dc = 6
-    };
+        .gpio_cs = GPIO_D, .gpio_dc = GPIO_D, .cs = 5, .dc = 6};
 
     (void)gpio_direction_set(GPIO_D, 6, OUTPUT);
     (void)gpio_direction_set(GPIO_D, 5, OUTPUT);

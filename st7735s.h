@@ -18,10 +18,10 @@ typedef enum st7735s_commands
     RASET = (unsigned char)0x2B,   /* Row Address Set */
     RAMWR = (unsigned char)0x2C,   /* Memory Write */
     RAMRD = (unsigned char)0x2E,   /* Memory Read  */
-    PTLAR = (unsigned char)0x30, /* Partial Start/End Address Set */
-    SCRLAR = (unsigned char)0x33, /* Scroll Area Set */
-    TENOFF = (unsigned char)0x34, /* Tearing Effect Line Off */
-    TENON = (unsigned char)0x35, /* Tearing Effect Mode Set & On */
+    PTLAR = (unsigned char)0x30,   /* Partial Start/End Address Set */
+    SCRLAR = (unsigned char)0x33,  /* Scroll Area Set */
+    TENOFF = (unsigned char)0x34,  /* Tearing Effect Line Off */
+    TENON = (unsigned char)0x35,   /* Tearing Effect Mode Set & On */
     MADCTL = (unsigned char)0x36,  /* Memory Access Control */
     IDMOOFF = (unsigned char)0x38, /* Idle Mode On */
     IDMOON = (unsigned char)0x39,  /* Idle Mode Off */
