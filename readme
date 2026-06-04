@@ -1,0 +1,35 @@
+
+STM8S103F3P6 Hardware Abstraction Layer
+    ==============================
+
+This repository is a study project of the HAL for stm8s103f3p6 purchased from a electronics shop.
+
+I try to read only original datasheets and reference manual from the manufacturer, and write code without AI.
+
+Tools
+-----
+
+* Language : C90 ISO
+* Compilier : SDCC (Small Device C Compilier) with pedantics flags
+* Build : Makefile, program ST-LINK V2, stm8sflash software
+* Text Editor : Emacs
+
+
+What implemented?
+-----------------
+
+* Custom assertions - error.h
+* General purpose input/output - gpio.h
+* Serial peripheral interface - spi.h
+
+
+To-Do
+-----
+
+* UART
+* I2C
+* SWIM
+* Watchdogs
+* Beep
+* ADC
+   
