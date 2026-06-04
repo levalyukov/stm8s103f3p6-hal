@@ -11,7 +11,7 @@ manual from the manufacturer, and write code without AI.
 Tools
 -----
 
-* Language : C90 ISO
+* Language : C90
 * Compilier : SDCC (Small Device C Compilier) with pedantics flags
 * Build : Makefile, program ST-LINK V2, stm8sflash software
 * Text Editor : Emacs
