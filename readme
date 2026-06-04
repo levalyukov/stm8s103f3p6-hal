@@ -2,9 +2,11 @@
 STM8S103F3P6 Hardware Abstraction Layer
     ==============================
 
-This repository is a study project of the HAL for stm8s103f3p6 purchased from a electronics shop.
+This repository is a study project of the HAL for
+stm8s103f3p6 purchased from a electronics shop.
 
-I try to read only original datasheets and reference manual from the manufacturer, and write code without AI.
+I try to read only original datasheets and reference
+manual from the manufacturer, and write code without AI.
 
 Tools
 -----

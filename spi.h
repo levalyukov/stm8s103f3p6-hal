@@ -2,7 +2,7 @@
 #define SPI_H
 
 #include "gpio.h"
-#include "mcu_error.h"
+#include "error.h"
 
 #define SPI ((spi *)0x005200)
 
@@ -74,13 +74,13 @@ typedef struct spi_device
     unsigned char dc;
 } spi_device_t;
 
-mcu_error_t spi_init(spi_mode_t mode, spi_baud_rate_t baud,
+error_t spi_init(spi_mode_t mode, spi_baud_rate_t baud,
                      spi_frame_format_t frame);
-mcu_error_t spi_enable(void);
-mcu_error_t spi_send(spi_device_t *device,
+error_t spi_enable(void);
+error_t spi_send(spi_device_t *device,
                      spi_transaction_t type, unsigned char data);
 unsigned char spi_read(spi_device_t* device, unsigned char data);
-mcu_error_t spi_disable(void);
+error_t spi_disable(void);
 void spi_deinit(void);
 
 #endif /* SPI_H */

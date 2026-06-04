@@ -1,4 +1,4 @@
-#include "mcu_error.h"
+#include "error.h"
 
 void error_signal_start(void)
 {

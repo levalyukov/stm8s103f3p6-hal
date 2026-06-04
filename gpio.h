@@ -1,7 +1,7 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-#include "mcu_error.h"
+#include "error.h"
 #include "mcu_pins_layout.h"
 
 #define GPIO_PIN_IS_OK(pin) (((pin) < 8) ? 1 : 0)
@@ -46,15 +46,15 @@ typedef enum gpio_output_config
     HIGH_SPEED = 1
 } gpio_output_config_t;
 
-mcu_error_t gpio_level_set(gpio_t *gpio, unsigned char pin,
+error_t gpio_level_set(gpio_t *gpio, unsigned char pin,
                            gpio_level_t level);
-mcu_error_t gpio_direction_set(gpio_t *gpio, unsigned char pin,
+error_t gpio_direction_set(gpio_t *gpio, unsigned char pin,
                                gpio_direction_t direction);
-mcu_error_t gpio_input_config_set(gpio_t *gpio,
+error_t gpio_input_config_set(gpio_t *gpio,
                                   unsigned char pin,
                                   gpio_input_config_t value_1,
                                   gpio_input_config_t value_2);
-mcu_error_t gpio_output_config_set(gpio_t *gpio,
+error_t gpio_output_config_set(gpio_t *gpio,
                                    unsigned char pin,
                                    gpio_output_config_t value_1,
                                    gpio_output_config_t value_2);
