@@ -62,6 +62,17 @@ typedef enum spi_transaction
     SPI_TRANSACTION_COMMAND
 } spi_transaction_t;
 
+typedef enum spi_flags
+{
+    SPI_FLAG_BSY = (unsigned char)0x80,    /* Busy flag */
+    SPI_FLAG_OVR = (unsigned char)0x40,    /* Overrun flag */
+    SPI_FLAG_MODF = (unsigned char)0x20,   /* Mode fault */
+    SPI_FLAG_CRCERR = (unsigned char)0x10, /* CRC error flag */
+    SPI_FLAG_WKUP = (unsigned char)0x04,   /* Wakeup flag */
+    SPI_FLAG_TXE = (unsigned char)0x02,    /* Transmit buffer not empty */
+    SPI_FLAG_RXNE = (unsigned char)0x01    /* Receive buffer not empty */
+} spi_flags_t;
+
 typedef struct spi_device
 {
     gpio_t *gpio_cs;

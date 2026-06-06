@@ -39,6 +39,7 @@ error_t spi_send(const spi_device_t *device, const spi_transaction_t type,
     check(device, FAIL);
     check(SPI->CR1 & (1 << 6), FAIL);
     check(SPI_TRANSACTION_TYPE_IS_OK(type), INVALID_ARG);
+    check(!(SPI->SR & (1 << 7)), FAIL);
 
     (void)gpio_level_set(device->gpio_cs, device->cs, LOW);
     if (type == SPI_TRANSACTION_COMMAND)
@@ -55,14 +56,14 @@ error_t spi_send(const spi_device_t *device, const spi_transaction_t type,
 
 void spi_deinit(void)
 {
-    SPI->SR = 0x02;
-    SPI->DR = 0x00;
-    SPI->CR1 = 0x00;
-    SPI->CR2 = 0x00;
-    SPI->ICR = 0x00;
-    SPI->CRCPR = 0x07;
-    SPI->RXCRCR = 0xFF;
-    SPI->TXCRCR = 0xFF;
+    SPI->SR = (unsigned char)0x02;
+    SPI->DR = (unsigned char)0x00;
+    SPI->CR1 = (unsigned char)0x00;
+    SPI->CR2 = (unsigned char)0x00;
+    SPI->ICR = (unsigned char)0x00;
+    SPI->CRCPR = (unsigned char)0x07;
+    SPI->RXCRCR = (unsigned char)0xFF;
+    SPI->TXCRCR = (unsigned char)0xFF;
 }
 
 unsigned char spi_read(const spi_device_t *device,
