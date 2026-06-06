@@ -25,6 +25,18 @@ typedef struct uart
     volatile unsigned char PSCR; /* Prescaler Register */
 } uart_t;
 
+typedef enum uart_flags
+{
+    UART_FLAG_TXE = (unsigned char)0x80,  /* Data is transferred  */
+    UART_FLAG_TC = (unsigned char)0x40,   /* Transmission is complete */
+    UART_FLAG_RXNE = (unsigned char)0x20, /* Received ready to read */
+    UART_FLAG_IDLE = (unsigned char)0x10, /* Idle line is detected */
+    UART_FLAG_OR = (unsigned char)0x08,   /* Overrune error is detected */
+    UART_FLAG_NF = (unsigned char)0x04,   /* Noise is detected */
+    UART_FLAG_FE = (unsigned char)0x02,   /* Framing error */
+    UART_FLAG_PE = (unsigned char)0x01    /* Parity error  */
+} uart_flags_t;
+
 typedef enum uart_transmit
 {
     UART_DATA_TRANSMITTER,

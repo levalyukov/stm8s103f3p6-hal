@@ -6,17 +6,22 @@ error_t uart_init(const uart_parity_control_t parity)
 
     UART->BRR1 = (unsigned char)0x41;
     UART->BRR2 = (unsigned char)0x02;
+    UART->CR1 |= parity;
 
     return OK;
 }
 
 error_t uart_enable(void)
 {
+    check(UART->CR1 & (1 << 5), FAIL);
+    UART->CR1 &= (0 << 5);
     return OK;
 }
 
 error_t uart_disable(void)
 {
+    check(!(UART->CR1 & (1 << 5)), FAIL);
+    UART->CR1 |= (1 << 5);
     return OK;
 }
 
@@ -39,6 +44,15 @@ error_t uart_send(const unsigned char data, const uart_transmit_t type)
             return FAIL;
 
         UART->CR2 |= (1 << 2);
+    }
+
+    if (type == UART_DATA_DUPLEX)
+    {
+        if (!(UART->CR2 & (1 << 3)))
+            UART->CR2 |= (1 << 3);
+
+        if (!(UART->CR2 & (1 << 2)))
+            UART->CR2 |= (1 << 2);
     }
 
     UART->DR = data;
