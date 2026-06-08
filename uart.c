@@ -6,7 +6,9 @@ error_t uart_init(const uart_parity_control_t parity)
 
     UART->BRR1 = (unsigned char)0x41;
     UART->BRR2 = (unsigned char)0x02;
-    UART->CR1 |= parity;
+
+    if (!(UART->CR3 & (1 << 6)))
+        UART->CR1 |= parity;
 
     return OK;
 }
