@@ -18,18 +18,14 @@ error_t spi_init(const spi_mode_t mode, const spi_baud_rate_t baud,
 error_t spi_enable(void)
 {
     check(!(SPI->CR1 & (1 << 6)), FAIL);
-
     SPI->CR1 |= (1 << 6);
-
     return OK;
 }
 
 error_t spi_disable(void)
 {
     check(SPI->CR1 & (1 << 6), FAIL);
-
     SPI->CR1 &= (0 << 6);
-
     return OK;
 }
 
@@ -69,8 +65,8 @@ void spi_deinit(void)
 unsigned char spi_read(const spi_device_t *device,
                        const unsigned char data)
 {
-    check(device, FAIL);
-    check(SPI->CR1 & (1 << 6), FAIL);
+    check(device, (unsigned char)0x00);
+    check(SPI->CR1 & (1 << 6), (unsigned char)0x00);
 
     SPI->DR = data;
 
