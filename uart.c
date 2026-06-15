@@ -1,14 +1,24 @@
 #include "uart.h"
 
-error_t uart_init(const uart_parity_control_t parity)
+error_t uart_init(const uart_baud_rate_t baudrate,
+                  const uart_data_size_t word_length,
+                  const uart_parity_t parity,
+                  const uart_selection_t selection)
 {
+    check(UART_BAUD_IS_OK(baudrate), INVALID_ARG);
+    check(UART_WORD_IS_OK(word_length), INVALID_ARG);
     check(UART_PARITY_IS_OK(parity), INVALID_ARG);
+    check(UART_PARITY_SELECTION_IS_OK(selection), INVALID_ARG);
 
-    UART->BRR1 = (unsigned char)0x41;
-    UART->BRR2 = (unsigned char)0x02;
+    UART->BRR1 = baudrate;
+    UART->CR1 |= parity;
+    UART->CR1 |= word_length;
 
     if (!(UART->CR3 & (1 << 6)))
+    {
         UART->CR1 |= parity;
+        UART->CR1 |= selection;
+    }
 
     return OK;
 }
@@ -27,35 +37,10 @@ error_t uart_disable(void)
     return OK;
 }
 
-error_t uart_send(const unsigned char data, const uart_transmit_t type)
+error_t uart_send(const unsigned char data)
 {
-    check(!(UART->CR1 & (1 << 5)), FAIL);
-    check(UART_TRANSMIT_IS_OK(type), INVALID_ARG);
-
-    if (type == UART_DATA_TRANSMITTER)
-    {
-        if (UART->SR & (1 << 7))
-            return FAIL;
-
-        UART->CR2 |= (1 << 3);
-    }
-
-    if (type == UART_DATA_RECEIVER)
-    {
-        if (UART->SR & (1 << 5))
-            return FAIL;
-
-        UART->CR2 |= (1 << 2);
-    }
-
-    if (type == UART_DATA_DUPLEX)
-    {
-        if (!(UART->CR2 & (1 << 3)))
-            UART->CR2 |= (1 << 3);
-
-        if (!(UART->CR2 & (1 << 2)))
-            UART->CR2 |= (1 << 2);
-    }
+    check(!(UART->CR1 & (1 << 5)), FAIL);  /* if uart disabled */
+    check(UART->SR & UART_FLAG_TXE, FAIL); /* if framing error */
 
     UART->DR = data;
 
@@ -65,13 +50,15 @@ error_t uart_send(const unsigned char data, const uart_transmit_t type)
 unsigned char uart_read(void)
 {
     check(!(UART->CR1 & (1 << 5)), 0x00);
+    check(!(UART->SR & UART_FLAG_NF), 0x00);
+    check(!(UART->SR & UART_FLAG_RXNE), 0x00);
     return UART->DR;
 }
 
 void uart_deinit(void)
 {
     UART->SR = (unsigned char)0xC0;
-    UART->DR = (unsigned char)0x00; /* in datasheet written 0xXX */
+    UART->DR = (unsigned char)0x00; /* in reference manual written 0xXX */
     UART->BRR1 = (unsigned char)0x00;
     UART->BRR2 = (unsigned char)0x00;
     UART->CR1 = (unsigned char)0x00;
