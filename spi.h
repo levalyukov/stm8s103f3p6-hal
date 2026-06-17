@@ -9,10 +9,10 @@
 #define SPI_MODE_IS_OK(mode)                                              \
     (((mode) == SPI_MODE_SLAVE) || ((mode) == SPI_MODE_MASTER))
 #define SPI_BAUD_IS_OK(baud)                                              \
-    (((baud) == SPI_BAUD_RATE_2) || ((baud) == SPI_BAUD_RATE_4) ||        \
-     ((baud) == SPI_BAUD_RATE_8) || ((baud) == SPI_BAUD_RATE_16) ||       \
-     ((baud) == SPI_BAUD_RATE_32) || ((baud) == SPI_BAUD_RATE_64) ||      \
-     ((baud) == SPI_BAUD_RATE_128) || ((baud) == SPI_BAUD_RATE_256))
+    (((baud) == SPI_BAUDRATE_2) || ((baud) == SPI_BAUDRATE_4) ||          \
+     ((baud) == SPI_BAUDRATE_8) || ((baud) == SPI_BAUDRATE_16) ||         \
+     ((baud) == SPI_BAUDRATE_32) || ((baud) == SPI_BAUDRATE_64) ||        \
+     ((baud) == SPI_BAUDRATE_128) || ((baud) == SPI_BAUDRATE_256))
 #define SPI_FRAME_FORMAT_IS_OK(frame)                                     \
     (((frame) == SPI_FRAME_FORMAT_MSB) ||                                 \
      ((frame) == SPI_FRAME_FORMAT_LSB))
@@ -38,17 +38,17 @@ typedef enum spi_mode_t
     SPI_MODE_MASTER = (unsigned char)0x04
 } spi_mode_t;
 
-typedef enum spi_baud_rate_t
+typedef enum spi_baudrate_t
 {
-    SPI_BAUD_RATE_2 = (unsigned char)0x00,
-    SPI_BAUD_RATE_4 = (unsigned char)0x08,
-    SPI_BAUD_RATE_8 = (unsigned char)0x10,
-    SPI_BAUD_RATE_16 = (unsigned char)0x18,
-    SPI_BAUD_RATE_32 = (unsigned char)0x20,
-    SPI_BAUD_RATE_64 = (unsigned char)0x28,
-    SPI_BAUD_RATE_128 = (unsigned char)0x30,
-    SPI_BAUD_RATE_256 = (unsigned char)0x38
-} spi_baud_rate_t;
+    SPI_BAUDRATE_2 = (unsigned char)0x00,
+    SPI_BAUDRATE_4 = (unsigned char)0x08,
+    SPI_BAUDRATE_8 = (unsigned char)0x10,
+    SPI_BAUDRATE_16 = (unsigned char)0x18,
+    SPI_BAUDRATE_32 = (unsigned char)0x20,
+    SPI_BAUDRATE_64 = (unsigned char)0x28,
+    SPI_BAUDRATE_128 = (unsigned char)0x30,
+    SPI_BAUDRATE_256 = (unsigned char)0x38
+} spi_baudrate_t;
 
 typedef enum spi_frame_format
 {
@@ -81,7 +81,7 @@ typedef struct spi_device
     unsigned char dc;
 } spi_device_t;
 
-error_t spi_init(spi_mode_t mode, spi_baud_rate_t baud,
+error_t spi_init(spi_mode_t mode, spi_baudrate_t baud,
                  spi_frame_format_t frame);
 error_t spi_enable(void);
 error_t spi_send(spi_device_t *device, spi_transaction_t type,

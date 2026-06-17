@@ -1,6 +1,6 @@
 #include "spi.h"
 
-error_t spi_init(const spi_mode_t mode, const spi_baud_rate_t baud,
+error_t spi_init(const spi_mode_t mode, const spi_baudrate_t baud,
                  const spi_frame_format_t frame)
 {
     check(!(SPI->CR1 & (1 << 6)), FAIL);
