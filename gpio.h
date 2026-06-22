@@ -32,8 +32,8 @@ typedef enum gpio_input_config
 {
     PULLUP_OFF = 0,
     PULLUP_ON = 1,
-    EXTERNAL_INTERRPUT_ON = 0,
-    EXTERNAL_INTERRPUT_OFF = 1
+    EXTERNAL_INTERRPUT_OFF = 0,
+    EXTERNAL_INTERRPUT_ON = 1
 } gpio_input_config_t;
 
 typedef enum gpio_output_config

@@ -7,9 +7,9 @@ error_t gpio_level_set(gpio_t *gpio, const unsigned char pin,
     check(GPIO_LEVEL_IS_OK(level), INVALID_ARG);
 
     if (level)
-        gpio->DDR |= (level << pin);
+        gpio->ODR |= (level << pin);
     else
-        gpio->DDR &= (level << pin);
+        gpio->ODR &= (level << pin);
 
     return OK;
 }
@@ -20,11 +20,11 @@ error_t gpio_direction_set(gpio_t *gpio, const unsigned char pin,
     check(GPIO_PIN_IS_OK(pin), INVALID_ARG);
     check(GPIO_DIRECTION_IS_OK(direction), INVALID_ARG);
 
-    if (direction && !(gpio->ODR & (1 << pin)))
-        gpio->ODR |= (1 << pin);
+    if (direction && !(gpio->DDR & (1 << pin)))
+        gpio->DDR |= (1 << pin);
 
-    if (!direction && (gpio->IDR & (1 << pin)))
-        gpio->IDR &= (0 << pin);
+    if (!direction && (gpio->DDR & (1 << pin)))
+        gpio->DDR &= (0 << pin);
 
     return OK;
 }
