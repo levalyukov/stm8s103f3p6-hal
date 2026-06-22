@@ -60,7 +60,7 @@ $\dfrac{F_{cpu}}{n}$
 
 ## Методы
 
-**Инициализация данных**
+**Инициализация spi-шины**
 ```c
 error_t spi_init(spi_mode_t mode, spi_baud_rate_t baud, spi_frame_format_t frame);
 ```
@@ -95,10 +95,7 @@ void spi_deinit(void);
 В данном примере - инициализация SPI-шины и дисплея с контроллером ST7735S при помощи методов для отправки данных.
 
 ```c
-#include "error.h"
 #include "gpio.h"
-#include "mcu_pins_layout.h"
-
 #include "spi.h"
 
 error_t main(void)
