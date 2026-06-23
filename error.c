@@ -1,6 +1,6 @@
 #include "error.h"
 
-void error_signal_start(void)
+static void error_signal_start(void)
 {
     error_pin_reset();
 

@@ -26,7 +26,4 @@ typedef enum error_codes
     CRITICAL_ERROR
 } error_t;
 
-void error_signal_start(void);
-static void error_pin_reset(void);
-
 #endif /* ERROR_H */
