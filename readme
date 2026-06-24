@@ -13,9 +13,9 @@ Tools
 
 * Language : C90
 * Compilier : SDCC (Small Device C Compilier) with pedantics flags
-* Build : Makefile, program ST-LINK V2, stm8sflash software
+* Build : Makefile, program ST-LINK V2, stm8sflash software, clang-format
 * Text Editor : Emacs
-* Coding Style : clang-format
+* Coding Style : Allman
 
 
 What implemented?
