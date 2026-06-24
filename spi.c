@@ -25,7 +25,7 @@ error_t spi_enable(void)
 error_t spi_disable(void)
 {
     check(SPI->CR1 & (1 << 6), FAIL);
-    SPI->CR1 &= (0 << 6);
+    SPI->CR1 &= ~(1 << 6);
     return OK;
 }
 
@@ -38,7 +38,7 @@ error_t spi_send(const spi_device_t *device, const spi_transaction_t type,
     check(!(SPI->SR & (1 << 7)), FAIL);
 
     (void)gpio_level_set(device->gpio_cs, device->cs, LOW);
-    if (type == SPI_TRANSACTION_COMMAND)
+    if (type)
         (void)gpio_level_set(device->gpio_dc, device->dc, HIGH);
     else
         (void)gpio_level_set(device->gpio_dc, device->dc, LOW);
