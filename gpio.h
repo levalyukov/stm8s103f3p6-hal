@@ -54,5 +54,6 @@ error_t gpio_input_config_set(gpio_t *gpio, unsigned char pin,
 error_t gpio_output_config_set(gpio_t *gpio, unsigned char pin,
                                gpio_output_config_t value_1,
                                gpio_output_config_t value_2);
+void gpio_reset(void);
 
 #endif /* GPIO_H */
