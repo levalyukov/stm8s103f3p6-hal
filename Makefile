@@ -9,7 +9,7 @@ OUT		:= output.ihx
 SRC		:= ${wildcard *.c}
 OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
-.PHONY : all flash syntax format clean
+.PHONY : all flash syntax format clear
 
 all : ${DIR} syntax ${OBJ} ${OUT} flash
 
@@ -34,6 +34,6 @@ syntax : ${SRC}
 format :
 	@find * \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} +;
 
-clean :
+clear :
 	@rm -f *.asm *.sym *.lst *.rel *.lk *.rst *.map *.ihx
 	@rm -rf ${DIR}
