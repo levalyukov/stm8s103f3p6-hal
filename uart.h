@@ -9,7 +9,7 @@
     (((type) == UART_DATA_TRANSMITTER) ||                                 \
      ((type) == UART_DATA_RECEIVER) || ((type) == UART_DATA_DUPLEX))
 
-#define UART_BAUD_IS_OK(baud)                                             \
+#define UART_BAUDRATE_IS_OK(baud)                                         \
     (((baud) == UART_BAUDRATE_2400) || ((baud) == UART_BAUDRATE_9600) ||  \
      ((baud) == UART_BAUDRATE_19200) ||                                   \
      ((baud) == UART_BAUDRATE_57600) ||                                   \
@@ -27,6 +27,16 @@
 #define UART_PARITY_SELECTION_IS_OK(selection)                            \
     (((selection) == UART_PARITY_SELECTION_ODD) ||                        \
      ((selection) == UART_PARITY_SELECTION_EVEN))
+
+#define UART_MODE_IS_OK(mode)                                             \
+    (((mode) == UART_MODE_RECEIVER) ||                                    \
+     ((mode) == UART_MODE_TRANSMITTER) ||                                 \
+     ((mode) == UART_MODE_FULLDUPLEX) || ((mode) == UART_MODE_NONE))
+
+#define UART_STOPBIT_IS_OK(stopbit)                                       \
+    (((stopbit) == UART_STOPBIT_1) || ((stopbit) == UART_STOPBIT_2) ||    \
+     ((stopbit) == UART_STOPBIT_1_5) ||                                   \
+     ((stopbit) == UART_STOPBIT_RESERVED))
 
 typedef struct uart
 {
@@ -62,16 +72,16 @@ typedef enum uart_transmit
     UART_DATA_DUPLEX
 } uart_transmit_t;
 
-typedef enum uart_baud_rate
+typedef enum uart_baudrate
 {
-    UART_BAUDRATE_2400 = (unsigned char)0x1047,
-    UART_BAUDRATE_9600 = (unsigned char)0x0412,
-    UART_BAUDRATE_19200 = (unsigned char)0x0209,
-    UART_BAUDRATE_57600 = (unsigned char)0x00AE,
-    UART_BAUDRATE_115200 = (unsigned char)0x0057,
-    UART_BAUDRATE_230400 = (unsigned char)0x002B,
-    UART_BAUDRATE_460800 = (unsigned char)0x0016
-} uart_baud_rate_t;
+    UART_BAUDRATE_2400,
+    UART_BAUDRATE_9600,
+    UART_BAUDRATE_19200,
+    UART_BAUDRATE_57600,
+    UART_BAUDRATE_115200,
+    UART_BAUDRATE_230400,
+    UART_BAUDRATE_460800
+} uart_baudrate_t;
 
 typedef enum uart_data_size
 {
@@ -91,11 +101,30 @@ typedef enum uart_selection
     UART_PARITY_SELECTION_EVEN = (unsigned char)0x00
 } uart_selection_t;
 
-error_t uart_init(uart_baud_rate_t baud_rate, uart_data_size_t word_length,
-                  uart_parity_t parity, uart_selection_t selection);
+typedef enum uart_mode
+{
+    UART_MODE_RECEIVER,
+    UART_MODE_TRANSMITTER,
+    UART_MODE_FULLDUPLEX,
+    UART_MODE_NONE
+} uart_mode_t;
+
+typedef enum uart_stopbit
+{
+    UART_STOPBIT_1,
+    UART_STOPBIT_2,
+    UART_STOPBIT_1_5,
+    UART_STOPBIT_RESERVED
+} uart_stopbit_t;
+
+error_t uart_init(uart_baudrate_t baudrate, uart_data_size_t word_length,
+                  uart_parity_t parity, uart_selection_t selection,
+                  uart_stopbit_t stopbit);
 error_t uart_enable(void);
 error_t uart_send(unsigned char data);
 unsigned char uart_read(void);
+error_t uart_mode_set(uart_mode_t mode);
+void uart_baudrate_set(uart_baudrate_t baudrate);
 error_t uart_disable(void);
 void uart_deinit(void);
 
