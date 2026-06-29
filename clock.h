@@ -25,13 +25,13 @@
      ((cpu) == CLK_CPU_PRESCALER_32) ||                                   \
      ((cpu) == CLK_CPU_PRESCALER_64) || ((cpu) == CLK_CPU_PRESCALER_128))
 
-#define CLK_INTERNAL_PRESCALER_IS_OK(internal)                            \
-    (((internal) == CLK_INTERNAL_PRESCALER_NONE) ||                       \
-     ((internal) == CLK_INTERNAL_PRESCALER_2) ||                          \
-     ((internal) == CLK_INTERNAL_PRESCALER_4) ||                          \
-     ((internal) == CLK_INTERNAL_PRESCALER_8))
+#define CLK_HSI_IS_OK(internal)                            \
+    (((internal) == CLK_HSI_NONE) ||                       \
+     ((internal) == CLK_HSI_2) ||                          \
+     ((internal) == CLK_HSI_4) ||                          \
+     ((internal) == CLK_HSI_8))
 
-typedef struct clock
+typedef struct
 {
     volatile unsigned char ICKR; /* Internal Clock Control */
     volatile unsigned char ECKR; /* External Clock Control */
@@ -49,7 +49,7 @@ typedef struct clock
     volatile unsigned char SWIMCCR;  /* SWIM Clock Control */
 } clock_t;
 
-typedef enum clock_peripheral
+typedef enum
 {
     CLK_GATING_TIM1 = (unsigned char)0x80,
     CLK_GATING_TIM3 = (unsigned char)0x40,
@@ -61,10 +61,11 @@ typedef enum clock_peripheral
     CLK_GATING_CAN = (unsigned char)0x80,
     CLK_GATING_ADC = (unsigned char)0x08,
     CLK_GATING_AWU = (unsigned char)0x04,
-    CLK_GATING_ALL = (unsigned char)0xFF
+    CLK_GATING_ALL = (unsigned char)0xFF,
+    CLK_GATING_NONE = (unsigned char)0x00
 } clock_peripheral_t;
 
-typedef enum clock_cpu_prescaler
+typedef enum
 {
     CLK_CPU_PRESCALER_NONE = (unsigned char)0x00,
     CLK_CPU_PRESCALER_2 = (unsigned char)0x01,
@@ -76,17 +77,17 @@ typedef enum clock_cpu_prescaler
     CLK_CPU_PRESCALER_128 = (unsigned char)0x07
 } clock_cpu_prescaler_t;
 
-typedef enum clock_resonator_prescaler
+typedef enum
 {
-    CLK_INTERNAL_PRESCALER_NONE,
-    CLK_INTERNAL_PRESCALER_2 = (unsigned char)0x08,
-    CLK_INTERNAL_PRESCALER_4 = (unsigned char)0x10,
-    CLK_INTERNAL_PRESCALER_8 = (unsigned char)0x18
-} clock_internal_prescaler_t;
+    CLK_HSI_NONE,
+    CLK_HSI_2 = (unsigned char)0x08,
+    CLK_HSI_4 = (unsigned char)0x10,
+    CLK_HSI_8 = (unsigned char)0x18
+} clock_hsi_t;
 
-error_t clock_divider_set(clock_cpu_prescaler_t cpu,
-                          clock_internal_prescaler_t internal);
+error_t clock_cpu_frequency_set(clock_cpu_prescaler_t cpu);
 error_t clock_peripheral_set(clock_peripheral_t peripheral);
+error_t clock_hsi_set(clock_hsi_t hsi);
 void clock_deinit(void);
 
 #endif /* CLOCK_H */
