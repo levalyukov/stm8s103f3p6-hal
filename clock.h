@@ -25,11 +25,9 @@
      ((cpu) == CLK_CPU_PRESCALER_32) ||                                   \
      ((cpu) == CLK_CPU_PRESCALER_64) || ((cpu) == CLK_CPU_PRESCALER_128))
 
-#define CLK_HSI_IS_OK(internal)                            \
-    (((internal) == CLK_HSI_NONE) ||                       \
-     ((internal) == CLK_HSI_2) ||                          \
-     ((internal) == CLK_HSI_4) ||                          \
-     ((internal) == CLK_HSI_8))
+#define CLK_HSI_IS_OK(internal)                                           \
+    (((internal) == CLK_HSI_NONE) || ((internal) == CLK_HSI_2) ||         \
+     ((internal) == CLK_HSI_4) || ((internal) == CLK_HSI_8))
 
 typedef struct
 {
