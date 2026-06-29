@@ -38,7 +38,7 @@
      ((stopbit) == UART_STOPBIT_1_5) ||                                   \
      ((stopbit) == UART_STOPBIT_RESERVED))
 
-typedef struct uart
+typedef struct
 {
     volatile unsigned char SR;   /* Status Register */
     volatile unsigned char DR;   /* Data Register */
@@ -53,7 +53,7 @@ typedef struct uart
     volatile unsigned char PSCR; /* Prescaler Register */
 } uart_t;
 
-typedef enum uart_flags
+typedef enum
 {
     UART_FLAG_TXE = (unsigned char)0x80,  /* Data is transferred  */
     UART_FLAG_TC = (unsigned char)0x40,   /* Transmission is complete */
@@ -65,14 +65,14 @@ typedef enum uart_flags
     UART_FLAG_PE = (unsigned char)0x01    /* Parity error  */
 } uart_flags_t;
 
-typedef enum uart_transmit
+typedef enum
 {
     UART_DATA_TRANSMITTER,
     UART_DATA_RECEIVER,
     UART_DATA_DUPLEX
 } uart_transmit_t;
 
-typedef enum uart_baudrate
+typedef enum
 {
     UART_BAUDRATE_2400,
     UART_BAUDRATE_9600,
@@ -83,25 +83,25 @@ typedef enum uart_baudrate
     UART_BAUDRATE_460800
 } uart_baudrate_t;
 
-typedef enum uart_data_size
+typedef enum
 {
     UART_DATA_SIZE_8_BITS = (unsigned char)0x00,
     UART_DATA_SIZE_9_BITS = (unsigned char)0x10
 } uart_data_size_t;
 
-typedef enum uart_parity
+typedef enum
 {
     UART_PARITY_DISABLE = (unsigned char)0x00,
     UART_PARITY_ENABLE = (unsigned char)0x02
 } uart_parity_t;
 
-typedef enum uart_selection
+typedef enum
 {
     UART_PARITY_SELECTION_ODD = (unsigned char)0x01,
     UART_PARITY_SELECTION_EVEN = (unsigned char)0x00
 } uart_selection_t;
 
-typedef enum uart_mode
+typedef enum
 {
     UART_MODE_RECEIVER,
     UART_MODE_TRANSMITTER,
@@ -109,7 +109,7 @@ typedef enum uart_mode
     UART_MODE_NONE
 } uart_mode_t;
 
-typedef enum uart_stopbit
+typedef enum
 {
     UART_STOPBIT_1,
     UART_STOPBIT_2,

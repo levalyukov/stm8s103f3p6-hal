@@ -17,7 +17,7 @@
             return z;                                                     \
     } while (0)
 
-typedef enum error_codes
+typedef enum
 {
     OK,
     FAIL,

@@ -16,7 +16,7 @@
     ((((v) == OPEN_DRAIN) || ((v) == PUSH_PULL)) &&                       \
      (((x) == LOW_SPEED) || ((x) == HIGH_SPEED)))
 
-typedef enum gpio_direction
+typedef enum
 {
     INPUT,
     OUTPUT
@@ -28,7 +28,7 @@ typedef enum gpio_level
     HIGH
 } gpio_level_t;
 
-typedef enum gpio_input_config
+typedef enum
 {
     PULLUP_OFF = 0,
     PULLUP_ON = 1,
@@ -36,7 +36,7 @@ typedef enum gpio_input_config
     EXTERNAL_INTERRPUT_ON = 1
 } gpio_input_config_t;
 
-typedef enum gpio_output_config
+typedef enum
 {
     OPEN_DRAIN = 0,
     PUSH_PULL = 1,

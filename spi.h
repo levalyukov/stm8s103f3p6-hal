@@ -20,7 +20,7 @@
     (((type) == SPI_TRANSACTION_DATA) ||                                  \
      ((type) == SPI_TRANSACTION_COMMAND))
 
-typedef struct spi
+typedef struct
 {
     volatile unsigned char CR1;    /* Control Register 1 */
     volatile unsigned char CR2;    /* Control Register 2 */
@@ -32,13 +32,13 @@ typedef struct spi
     volatile unsigned char TXCRCR; /* Tx CRC Register */
 } spi;
 
-typedef enum spi_mode_t
+typedef enum
 {
     SPI_MODE_SLAVE = (unsigned char)0x00,
     SPI_MODE_MASTER = (unsigned char)0x04
 } spi_mode_t;
 
-typedef enum spi_baudrate_t
+typedef enum
 {
     SPI_BAUDRATE_2 = (unsigned char)0x00,
     SPI_BAUDRATE_4 = (unsigned char)0x08,
@@ -50,7 +50,7 @@ typedef enum spi_baudrate_t
     SPI_BAUDRATE_256 = (unsigned char)0x38
 } spi_baudrate_t;
 
-typedef enum spi_frame_format
+typedef enum
 {
     SPI_FRAME_FORMAT_MSB = (unsigned char)0x00,
     SPI_FRAME_FORMAT_LSB = (unsigned char)0x80
@@ -62,7 +62,7 @@ typedef enum spi_transaction
     SPI_TRANSACTION_COMMAND
 } spi_transaction_t;
 
-typedef enum spi_flags
+typedef enum
 {
     SPI_FLAG_BSY = (unsigned char)0x80,    /* Busy flag */
     SPI_FLAG_OVR = (unsigned char)0x40,    /* Overrun flag */
@@ -73,7 +73,7 @@ typedef enum spi_flags
     SPI_FLAG_RXNE = (unsigned char)0x01    /* Receive buffer not empty */
 } spi_flags_t;
 
-typedef struct spi_device
+typedef struct
 {
     gpio_t *gpio_cs;
     gpio_t *gpio_dc;
