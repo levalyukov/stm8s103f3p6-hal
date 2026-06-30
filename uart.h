@@ -1,6 +1,7 @@
 #ifndef UART_H
 #define UART_H
 
+#include "clock.h"
 #include "error.h"
 
 #define UART ((uart_t *)0x005230)

@@ -1,21 +1,24 @@
 #ifndef SPI_H
 #define SPI_H
 
+#include "clock.h"
 #include "error.h"
-#include "gpio.h"
 
 #define SPI ((spi *)0x005200)
 
 #define SPI_MODE_IS_OK(mode)                                              \
     (((mode) == SPI_MODE_SLAVE) || ((mode) == SPI_MODE_MASTER))
+
 #define SPI_BAUD_IS_OK(baud)                                              \
     (((baud) == SPI_BAUDRATE_2) || ((baud) == SPI_BAUDRATE_4) ||          \
      ((baud) == SPI_BAUDRATE_8) || ((baud) == SPI_BAUDRATE_16) ||         \
      ((baud) == SPI_BAUDRATE_32) || ((baud) == SPI_BAUDRATE_64) ||        \
      ((baud) == SPI_BAUDRATE_128) || ((baud) == SPI_BAUDRATE_256))
+
 #define SPI_FRAME_FORMAT_IS_OK(frame)                                     \
     (((frame) == SPI_FRAME_FORMAT_MSB) ||                                 \
      ((frame) == SPI_FRAME_FORMAT_LSB))
+
 #define SPI_TRANSACTION_TYPE_IS_OK(type)                                  \
     (((type) == SPI_TRANSACTION_DATA) ||                                  \
      ((type) == SPI_TRANSACTION_COMMAND))
@@ -56,7 +59,7 @@ typedef enum
     SPI_FRAME_FORMAT_LSB = (unsigned char)0x80
 } spi_frame_format_t;
 
-typedef enum spi_transaction
+typedef enum
 {
     SPI_TRANSACTION_DATA,
     SPI_TRANSACTION_COMMAND
@@ -86,7 +89,7 @@ error_t spi_init(spi_mode_t mode, spi_baudrate_t baud,
 error_t spi_enable(void);
 error_t spi_send(spi_device_t *device, spi_transaction_t type,
                  unsigned char data);
-unsigned char spi_read(spi_device_t *device, unsigned char data);
+unsigned char spi_read(void);
 error_t spi_disable(void);
 void spi_deinit(void);
 

@@ -8,6 +8,7 @@ error_t spi_init(const spi_mode_t mode, const spi_baudrate_t baud,
     check(SPI_BAUD_IS_OK(baud), INVALID_ARG);
     check(SPI_FRAME_FORMAT_IS_OK(frame), INVALID_ARG);
 
+    CLOCK->PCKENR1 |= CLK_GATING_SPI;
     SPI->CR1 |= mode;
     SPI->CR1 |= baud;
     SPI->CR1 |= frame;
@@ -29,46 +30,41 @@ error_t spi_disable(void)
     return OK;
 }
 
-error_t spi_send(const spi_device_t *device, const spi_transaction_t type,
+error_t spi_send(const spi_device_t *device,
+		 const spi_transaction_t type,
                  const unsigned char data)
 {
     check(device, FAIL);
-    check(SPI->CR1 & (1 << 6), FAIL);
+    check(SPI->CR1 & (1 << 6), FAIL); /* if disabled */
     check(SPI_TRANSACTION_TYPE_IS_OK(type), INVALID_ARG);
-    check(!(SPI->SR & (1 << 7)), FAIL);
-
-    (void)gpio_level_set(device->gpio_cs, device->cs, LOW);
+    check(!(SPI->SR & (1 << 7)), FAIL); /* if busy */
+    
+    (device->gpio_cs)->ODR &= ~(1 << device->cs);
     if (type)
-        (void)gpio_level_set(device->gpio_dc, device->dc, HIGH);
+      (device->gpio_dc)->ODR |= (1 << device->dc);
     else
-        (void)gpio_level_set(device->gpio_dc, device->dc, LOW);
+      (device->gpio_dc)->ODR &= ~(1 << device->dc);
 
     SPI->DR = data;
-
-    (void)gpio_level_set(device->gpio_cs, device->cs, HIGH);
+    (device->gpio_cs)->ODR |= (1 << device->cs);
 
     return OK;
 }
 
 void spi_deinit(void)
 {
-    SPI->SR = (unsigned char)0x02;
-    SPI->DR = (unsigned char)0x00;
-    SPI->CR1 = (unsigned char)0x00;
-    SPI->CR2 = (unsigned char)0x00;
-    SPI->ICR = (unsigned char)0x00;
-    SPI->CRCPR = (unsigned char)0x07;
-    SPI->RXCRCR = (unsigned char)0xFF;
-    SPI->TXCRCR = (unsigned char)0xFF;
+    SPI->SR = 0x02;
+    SPI->DR = 0x00;
+    SPI->CR1 = 0x00;
+    SPI->CR2 = 0x00;
+    SPI->ICR = 0x00;
+    SPI->CRCPR = 0x07;
+    SPI->RXCRCR = 0xFF;
+    SPI->TXCRCR = 0xFF;
 }
 
-unsigned char spi_read(const spi_device_t *device,
-                       const unsigned char data)
+unsigned char spi_read(void)
 {
-    check(device, (unsigned char)0x00);
-    check(SPI->CR1 & (1 << 6), (unsigned char)0x00);
-
-    SPI->DR = data;
-
-    return SPI->DR;
+  check(SPI->CR1 & (1 << 6), 0x00); /* if disabled */
+  return SPI->DR;
 }

@@ -83,9 +83,6 @@ typedef enum
     CLK_HSI_8 = (unsigned char)0x18
 } clock_hsi_t;
 
-error_t clock_cpu_frequency_set(clock_cpu_prescaler_t cpu);
-error_t clock_peripheral_set(clock_peripheral_t peripheral);
-error_t clock_hsi_set(clock_hsi_t hsi);
 void clock_deinit(void);
 
 #endif /* CLOCK_H */

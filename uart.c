@@ -12,9 +12,9 @@ error_t uart_init(const uart_baudrate_t baudrate,
     check(UART_PARITY_SELECTION_IS_OK(selection), INVALID_ARG);
     check(UART_STOPBIT_IS_OK(stopbit), INVALID_ARG);
 
+    CLOCK->PCKENR1 |= CLK_GATING_UART1;
     UART->CR1 |= parity;
     UART->CR1 |= word_length;
-
     uart_baudrate_set(baudrate);
 
     if (stopbit != UART_STOPBIT_1)
@@ -55,8 +55,8 @@ error_t uart_send(const unsigned char data)
 
 unsigned char uart_read(void)
 {
-    check(!(UART->CR1 & (1 << 5)), 0x00);
-    return (unsigned char)UART->DR;
+    check(!(UART->CR1 & (1 << 5)), 0x00); /* if disabled */
+    return UART->DR;
 }
 
 error_t uart_mode_set(const uart_mode_t mode)
@@ -125,15 +125,15 @@ void uart_baudrate_set(const uart_baudrate_t baudrate)
 
 void uart_deinit(void)
 {
-    UART->SR = (unsigned char)0xC0;
-    UART->DR = (unsigned char)0x00; /* in reference manual written 0xXX */
-    UART->BRR1 = (unsigned char)0x00;
-    UART->BRR2 = (unsigned char)0x00;
-    UART->CR1 = (unsigned char)0x00;
-    UART->CR2 = (unsigned char)0x00;
-    UART->CR3 = (unsigned char)0x00;
-    UART->CR4 = (unsigned char)0x00;
-    UART->CR5 = (unsigned char)0x00;
-    UART->GTR = (unsigned char)0x00;
-    UART->PSCR = (unsigned char)0x00;
+    UART->SR = 0xC0;
+    UART->DR = 0x00; /* in reference manual written 0xXX */
+    UART->BRR1 = 0x00;
+    UART->BRR2 = 0x00;
+    UART->CR1 = 0x00;
+    UART->CR2 = 0x00;
+    UART->CR3 = 0x00;
+    UART->CR4 = 0x00;
+    UART->CR5 = 0x00;
+    UART->GTR = 0x00;
+    UART->PSCR = 0x00;
 }
