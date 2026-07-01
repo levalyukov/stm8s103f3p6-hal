@@ -14,6 +14,7 @@ Tools
 * Language : C90
 * Compilier : SDCC (Small Device C Compilier) with pedantics flags
 * Build : Makefile, program ST-LINK V2, stm8sflash software, clang-format
+* Checker : Cppcheck with addon - MISRA C:2012
 * Text Editor : Emacs
 * Coding Style : Allman
 
@@ -21,15 +22,16 @@ Tools
 What implemented?
 -----------------
 
+* Documentation - docs/
 * Custom assertions - error.h
 * General purpose input/output - gpio.h
 * Serial peripheral interface - spi.h
-
+* Universal Asynchronous Receiver-Transmitter - uart.h
 
 To-Do
 -----
 
-* UART
+* Rewrite all code to the MISRA C:2012 (In Priority)
 * I2C
 * SWIM
 * Watchdogs

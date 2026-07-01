@@ -5,7 +5,7 @@ DEVICE		:= stm8s103f3
 PROGRAMMER	:= stlinkv2
 
 CCHECK		:= cppcheck
-CCHECKF		:= --std=c90 --platform=avr8 --addon=misra.py --enable=all --inline-suppr
+CCHECKF		:= --std=c90 --platform=avr8 --addon=misra.py --enable=all --inline-suppr -I .
 
 DIR		:= out
 OUT		:= output.ihx
@@ -32,9 +32,7 @@ flash : ${DIR}/${OUT}
 	${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${OUT}
 
 standart :
-	@for file in ${SRC}; do \
-		${CCHECK} $$file ${CCHECKF}; \
-	done
+	${CCHECK} ${CCHECKF} .
 
 syntax : ${SRC}
 	@for file in ${SRC}; do \
