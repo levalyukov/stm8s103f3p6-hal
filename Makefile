@@ -4,14 +4,17 @@ FLASH		:= stm8flash
 DEVICE		:= stm8s103f3
 PROGRAMMER	:= stlinkv2
 
-DIR		:= build
+CCHECK		:= cppcheck
+CCHECKF		:= --std=c90 --platform=avr8 --addon=misra.py --enable=all --inline-suppr
+
+DIR		:= out
 OUT		:= output.ihx
 SRC		:= ${wildcard *.c}
 OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
-.PHONY : all flash syntax format clear
+.PHONY : all flash build syntax format clear standart
 
-all : ${DIR} syntax ${OBJ} ${OUT} flash
+all : build flash
 
 
 ${DIR} :
@@ -23,8 +26,15 @@ ${DIR}/%.rel : %.c
 ${OUT} : ${OBJ}
 	${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${OUT}
 
+build : syntax ${DIR} ${OBJ} ${OUT}
+
 flash : ${DIR}/${OUT}
 	${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${OUT}
+
+standart :
+	@for file in ${SRC}; do \
+		${CCHECK} $$file ${CCHECKF}; \
+	done
 
 syntax : ${SRC}
 	@for file in ${SRC}; do \
