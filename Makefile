@@ -5,7 +5,7 @@ DEVICE		:= stm8s103f3
 PROGRAMMER	:= stlinkv2
 
 CCHECK		:= cppcheck
-CCHECKF		:= --std=c90 --platform=avr8 --addon=misra.py --enable=all --inline-suppr -I .
+CCHECKF		:= --std=c90 --platform=avr8 --addon=misra.py --enable=all --inline-suppr -I . --suppressions-list=suppression.txt --checkers-report=report.txt
 
 DIR		:= out
 OUT		:= output.ihx
