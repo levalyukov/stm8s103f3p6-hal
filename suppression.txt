@@ -1,0 +1,6 @@
+misra-c2012-2.2
+misra-c2012-2.3
+misra-c2012-2.4
+misra-c2012-2.5
+misra-c2012-8.7
+unusedFunction
