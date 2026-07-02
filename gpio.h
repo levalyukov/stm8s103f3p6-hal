@@ -4,7 +4,7 @@
 #include "error.h"
 #include "mcu_pins_layout.h"
 
-#define GPIO_PIN_IS_OK(pin) (((pin) < 8) ? 1 : 0)
+#define GPIO_PIN_IS_OK(pin) (((pin) < 8U) ? 1U : 0U)
 #define GPIO_LEVEL_IS_OK(level) (((level) == LOW) || ((level) == HIGH))
 #define GPIO_DIRECTION_IS_OK(direction)                                   \
     (((direction) == INPUT) || ((direction) == OUTPUT))
@@ -22,7 +22,7 @@ typedef enum
     OUTPUT
 } gpio_direction_t;
 
-typedef enum gpio_level
+typedef enum
 {
     LOW,
     HIGH

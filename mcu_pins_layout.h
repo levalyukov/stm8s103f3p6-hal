@@ -1,14 +1,16 @@
-#ifndef MCU_PINS_LAYOUT_H
-#define MCU_PINS_LAYOUT_H
+#ifndef MCU_PINS_H
+#define MCU_PINS_H
 
-#define GPIO_A ((gpio_t *)0x005000)
-#define GPIO_B ((gpio_t *)0x005005)
-#define GPIO_C ((gpio_t *)0x00500A)
-#define GPIO_D ((gpio_t *)0x00500F)
-#define GPIO_E ((gpio_t *)0x005014)
-#define GPIO_F ((gpio_t *)0x005019)
+/* cppcheck-suppress-begin misra-c2012-11.4 */
+#define GPIO_A (volatile gpio_t *)0x005000U
+#define GPIO_B (volatile gpio_t *)0x005005U
+#define GPIO_C (volatile gpio_t *)0x00500AU
+#define GPIO_D (volatile gpio_t *)0x00500FU
+#define GPIO_E (volatile gpio_t *)0x005014U
+#define GPIO_F (volatile gpio_t *)0x005019U
+/* cppcheck-suppress-end misra-c2012-11.4 */
 
-typedef struct gpio
+typedef struct
 {
     volatile unsigned char ODR; /* Output Data Register */
     volatile unsigned char IDR; /* Input Data Register */
