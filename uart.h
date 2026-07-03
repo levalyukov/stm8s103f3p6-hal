@@ -4,6 +4,7 @@
 #include "clock.h"
 #include "error.h"
 
+/* cppcheck-suppress misra-c2012-11.4 */
 #define UART ((uart_t *)0x005230)
 
 #define UART_TRANSMIT_IS_OK(type)                                         \
@@ -125,7 +126,6 @@ error_t uart_enable(void);
 error_t uart_send(unsigned char data);
 unsigned char uart_read(void);
 error_t uart_mode_set(uart_mode_t mode);
-void uart_baudrate_set(uart_baudrate_t baudrate);
 error_t uart_disable(void);
 void uart_deinit(void);
 

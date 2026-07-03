@@ -1,84 +1,144 @@
 #include "uart.h"
 
+static void uart_baudrate_set(uart_baudrate_t baudrate);
+
 error_t uart_init(const uart_baudrate_t baudrate,
                   const uart_data_size_t word_length,
                   const uart_parity_t parity,
                   const uart_selection_t selection,
                   const uart_stopbit_t stopbit)
 {
-    check(UART_BAUDRATE_IS_OK(baudrate), INVALID_ARG);
-    check(UART_WORD_IS_OK(word_length), INVALID_ARG);
-    check(UART_PARITY_IS_OK(parity), INVALID_ARG);
-    check(UART_PARITY_SELECTION_IS_OK(selection), INVALID_ARG);
-    check(UART_STOPBIT_IS_OK(stopbit), INVALID_ARG);
+    error_t status = OK;
 
-    CLOCK->PCKENR1 |= CLK_GATING_UART1;
-    UART->CR1 |= parity;
-    UART->CR1 |= word_length;
-    uart_baudrate_set(baudrate);
-
-    if (stopbit != UART_STOPBIT_1)
-        UART->CR3 |= stopbit;
-
-    if (UART->CR3 & (1 << 6) || !stopbit)
-        UART->CR3 &= ~((1 << 5) | (1 << 4));
-
-    if (!(UART->CR3 & (1 << 6)))
+    if (!UART_BAUDRATE_IS_OK(baudrate) || !UART_WORD_IS_OK(word_length) ||
+        !UART_PARITY_IS_OK(parity) ||
+        !UART_PARITY_SELECTION_IS_OK(selection) ||
+        !UART_STOPBIT_IS_OK(stopbit))
     {
-        UART->CR1 |= parity;
-        UART->CR1 |= selection;
+        status = INVALID_ARG;
     }
 
-    return OK;
+    if (status == OK)
+    {
+        CLOCK->PCKENR1 |= CLK_GATING_UART1;
+        UART->CR1 |= parity;
+        UART->CR1 |= word_length;
+        uart_baudrate_set(baudrate);
+
+        if (stopbit != UART_STOPBIT_1)
+        {
+            UART->CR3 |= stopbit;
+        }
+        else
+        {
+            UART->CR3 &= ~stopbit;
+        }
+
+        if (UART->CR3 & (1U << 6U) || !stopbit)
+        {
+            UART->CR3 &= ~((1U << 5U) | (1U << 4U));
+        }
+
+        if (!(UART->CR3 & (1U << 6U)))
+        {
+            UART->CR1 |= parity;
+            UART->CR1 |= selection;
+        }
+    }
+
+    return status;
 }
 
 error_t uart_enable(void)
 {
-    check(UART->CR1 & (1 << 5), FAIL);
-    UART->CR1 &= ~(1 << 5);
-    return OK;
+    error_t status = OK;
+
+    if ((UART->CR1 & (1U << 5U)) == 1U)
+    {
+        UART->CR1 &= ~(1U << 5U);
+    }
+    else
+    {
+        status = FAIL;
+    }
+
+    return status;
 }
 
 error_t uart_disable(void)
 {
-    check(!(UART->CR1 & (1 << 5)), FAIL);
-    UART->CR1 |= (1 << 5);
-    return OK;
+    error_t status = OK;
+
+    if ((UART->CR1 & ~(1U << 5U)) == 1U)
+    {
+        UART->CR1 |= (1U << 5U);
+    }
+    else
+    {
+        status = FAIL;
+    }
+
+    return status;
 }
 
 error_t uart_send(const unsigned char data)
 {
-    check(!(UART->CR1 & (1 << 5)), FAIL); /* if uart disabled */
-    UART->DR = data;
-    return OK;
+    error_t status = OK;
+    if ((UART->CR1 & ~(1U << 5U)) == 1U)
+    {
+        UART->DR = data;
+    }
+    else
+    {
+        status = INVALID_ARG;
+    }
+
+    return status;
 }
 
 unsigned char uart_read(void)
 {
-    check(!(UART->CR1 & (1 << 5)), 0x00); /* if disabled */
-    return UART->DR;
+    unsigned char data = 0x00U;
+    if ((UART->CR1 & ~(1U << 5U)) == 1U)
+    {
+        data = UART->DR;
+    }
+
+    return data;
 }
 
 error_t uart_mode_set(const uart_mode_t mode)
 {
-    check(UART_MODE_IS_OK(mode), INVALID_ARG);
+    error_t status = OK;
+    if (!UART_MODE_IS_OK(mode))
+    {
+        status = INVALID_ARG;
+    }
 
     if (mode == UART_MODE_RECEIVER)
-        UART->CR2 |= (1 << 2);
+    {
+        UART->CR2 |= (1U << 2U);
+    }
 
     if (mode == UART_MODE_TRANSMITTER)
-        UART->CR2 |= (1 << 3);
+    {
+        UART->CR2 |= (1U << 3U);
+    }
 
     if (mode == UART_MODE_FULLDUPLEX)
-        UART->CR2 |= ((1 << 3) | (1 << 2));
+    {
+        UART->CR2 |= ((1U << 3U) | (1U << 2U));
+    }
 
     if (mode == UART_MODE_NONE)
-        UART->CR2 &= ~((1 << 3) | (1 << 2));
+    {
+        UART->CR2 &= ~((1U << 3U) | (1U << 2U));
+    }
 
-    return OK;
+    return status;
 }
 
-void uart_baudrate_set(const uart_baudrate_t baudrate)
+static void uart_baudrate_set(const uart_baudrate_t baudrate)
 {
     switch (baudrate)
     {
@@ -120,6 +180,7 @@ void uart_baudrate_set(const uart_baudrate_t baudrate)
     default:
         UART->BRR2 = 0x00;
         UART->BRR1 = 0x00;
+        break;
     }
 }
 

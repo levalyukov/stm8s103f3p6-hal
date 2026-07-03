@@ -3,6 +3,7 @@
 
 #include "error.h"
 
+/* cppcheck-suppress misra-c2012-11.4 */
 #define CLOCK ((clock_t *)0x0050C0)
 
 #define CLK_PERIPHERAL_IS_OK(peripheral)                                  \
@@ -29,7 +30,7 @@
     (((internal) == CLK_HSI_NONE) || ((internal) == CLK_HSI_2) ||         \
      ((internal) == CLK_HSI_4) || ((internal) == CLK_HSI_8))
 
-typedef struct
+typedef struct clock
 {
     volatile unsigned char ICKR; /* Internal Clock Control */
     volatile unsigned char ECKR; /* External Clock Control */
@@ -47,7 +48,7 @@ typedef struct
     volatile unsigned char SWIMCCR;  /* SWIM Clock Control */
 } clock_t;
 
-typedef enum
+typedef enum clock_peripheral
 {
     CLK_GATING_TIM1 = (unsigned char)0x80,
     CLK_GATING_TIM3 = (unsigned char)0x40,
@@ -63,7 +64,7 @@ typedef enum
     CLK_GATING_NONE = (unsigned char)0x00
 } clock_peripheral_t;
 
-typedef enum
+typedef enum clock_cpu_prescaler
 {
     CLK_CPU_PRESCALER_NONE = (unsigned char)0x00,
     CLK_CPU_PRESCALER_2 = (unsigned char)0x01,
@@ -75,7 +76,7 @@ typedef enum
     CLK_CPU_PRESCALER_128 = (unsigned char)0x07
 } clock_cpu_prescaler_t;
 
-typedef enum
+typedef enum clock_hsi
 {
     CLK_HSI_NONE,
     CLK_HSI_2 = (unsigned char)0x08,
@@ -83,6 +84,6 @@ typedef enum
     CLK_HSI_8 = (unsigned char)0x18
 } clock_hsi_t;
 
-void clock_deinit(void);
+void clock_reset(void);
 
 #endif /* CLOCK_H */

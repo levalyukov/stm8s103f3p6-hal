@@ -1,6 +1,6 @@
 #include "clock.h"
 
-void clock_deinit(void)
+void clock_reset(void)
 {
     CLOCK->ICKR = (unsigned char)0x01;
     CLOCK->ECKR = (unsigned char)0x00;

@@ -4,7 +4,8 @@
 #include "clock.h"
 #include "error.h"
 
-#define SPI ((spi *)0x005200)
+/* cppcheck-suppress misra-c2012-11.4 */
+#define SPI ((spi_t *)0x005200)
 
 #define SPI_MODE_IS_OK(mode)                                              \
     (((mode) == SPI_MODE_SLAVE) || ((mode) == SPI_MODE_MASTER))
@@ -33,30 +34,30 @@ typedef struct
     volatile unsigned char CRCPR;  /* CRC Polynomial Register */
     volatile unsigned char RXCRCR; /* Rx CRC Register */
     volatile unsigned char TXCRCR; /* Tx CRC Register */
-} spi;
+} spi_t;
 
-typedef enum
+typedef enum spi_mode
 {
-    SPI_MODE_SLAVE = (unsigned char)0x00,
-    SPI_MODE_MASTER = (unsigned char)0x04
+    SPI_MODE_SLAVE = 0x00,
+    SPI_MODE_MASTER = 0x04
 } spi_mode_t;
 
 typedef enum
 {
-    SPI_BAUDRATE_2 = (unsigned char)0x00,
-    SPI_BAUDRATE_4 = (unsigned char)0x08,
-    SPI_BAUDRATE_8 = (unsigned char)0x10,
-    SPI_BAUDRATE_16 = (unsigned char)0x18,
-    SPI_BAUDRATE_32 = (unsigned char)0x20,
-    SPI_BAUDRATE_64 = (unsigned char)0x28,
-    SPI_BAUDRATE_128 = (unsigned char)0x30,
-    SPI_BAUDRATE_256 = (unsigned char)0x38
+    SPI_BAUDRATE_2 = 0x00,
+    SPI_BAUDRATE_4 = 0x08,
+    SPI_BAUDRATE_8 = 0x10,
+    SPI_BAUDRATE_16 = 0x18,
+    SPI_BAUDRATE_32 = 0x20,
+    SPI_BAUDRATE_64 = 0x28,
+    SPI_BAUDRATE_128 = 0x30,
+    SPI_BAUDRATE_256 = 0x38
 } spi_baudrate_t;
 
 typedef enum
 {
-    SPI_FRAME_FORMAT_MSB = (unsigned char)0x00,
-    SPI_FRAME_FORMAT_LSB = (unsigned char)0x80
+    SPI_FRAME_FORMAT_MSB = 0x00,
+    SPI_FRAME_FORMAT_LSB = 0x80
 } spi_frame_format_t;
 
 typedef enum
@@ -67,13 +68,13 @@ typedef enum
 
 typedef enum
 {
-    SPI_FLAG_BSY = (unsigned char)0x80,    /* Busy flag */
-    SPI_FLAG_OVR = (unsigned char)0x40,    /* Overrun flag */
-    SPI_FLAG_MODF = (unsigned char)0x20,   /* Mode fault */
-    SPI_FLAG_CRCERR = (unsigned char)0x10, /* CRC error flag */
-    SPI_FLAG_WKUP = (unsigned char)0x04,   /* Wakeup flag */
-    SPI_FLAG_TXE = (unsigned char)0x02,    /* Transmit buffer not empty */
-    SPI_FLAG_RXNE = (unsigned char)0x01    /* Receive buffer not empty */
+    SPI_FLAG_BSY = 0x80U,    /* Busy flag */
+    SPI_FLAG_OVR = 0x40U,    /* Overrun flag */
+    SPI_FLAG_MODF = 0x20U,   /* Mode fault */
+    SPI_FLAG_CRCERR = 0x10U, /* CRC error flag */
+    SPI_FLAG_WKUP = 0x04U,   /* Wakeup flag */
+    SPI_FLAG_TXE = 0x02U,    /* Transmit buffer not empty */
+    SPI_FLAG_RXNE = 0x01U    /* Receive buffer not empty */
 } spi_flags_t;
 
 typedef struct
