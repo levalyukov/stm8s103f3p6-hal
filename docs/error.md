@@ -18,11 +18,12 @@
 
 int main(void)
 {
-    unsigned char a = 0b00000000;
-    a |= (1 << 0);
-
+    volatile unsigned char a = 0x00U;
+    a |= (1U << 0U);
+    
     /* Выкинет здесь исключение и будет мигать светодиод */
-    assert(a & (1 << 1));
+    assert(a & (1U << 1U));
+    
+    return 0;
 }
-
 ```
