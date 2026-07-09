@@ -5,7 +5,7 @@
 #include "error.h"
 
 /* cppcheck-suppress misra-c2012-11.4 */
-#define UART ((uart_t *)0x005230)
+#define UART ((volatile uart_t *)0x005230)
 
 #define UART_TRANSMIT_IS_OK(type)                                         \
     (((type) == UART_DATA_TRANSMITTER) ||                                 \

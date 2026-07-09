@@ -2,7 +2,7 @@
 #define I2C_H
 
 /* cppcheck-suppress misra-c2012-11.4 */
-#define I2C ((i2c_t *)0x005210)
+#define I2C ((volatile i2c_t *)0x005210)
 
 typedef struct
 {

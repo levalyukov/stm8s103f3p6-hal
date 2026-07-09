@@ -4,7 +4,7 @@
 #include "error.h"
 
 /* cppcheck-suppress misra-c2012-11.4 */
-#define CLOCK ((clock_t *)0x0050C0)
+#define CLOCK ((volatile clock_t *)0x0050C0)
 
 #define CLK_PERIPHERAL_IS_OK(peripheral)                                  \
     (((peripheral) == CLK_GATING_TIM1) ||                                 \

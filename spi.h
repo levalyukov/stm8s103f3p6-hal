@@ -5,7 +5,7 @@
 #include "error.h"
 
 /* cppcheck-suppress misra-c2012-11.4 */
-#define SPI ((spi_t *)0x005200)
+#define SPI ((volatile spi_t *)0x005200)
 
 #define SPI_MODE_IS_OK(mode)                                              \
     (((mode) == SPI_MODE_SLAVE) || ((mode) == SPI_MODE_MASTER))
