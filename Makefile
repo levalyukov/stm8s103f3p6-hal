@@ -20,7 +20,7 @@ all : build flash
 
 
 ${DIR} :
-	@mkdir -p $@
+	mkdir -p $@
 
 ${DIR}/%.rel : %.c
 	${CC} ${CFLAGS} -c $< -o $@
@@ -37,13 +37,13 @@ standart :
 	${CCHECK} ${CCHECKF} .
 
 syntax : ${SRC}
-	@for file in ${SRC}; do \
+	for file in ${SRC}; do \
 		${CC} ${CFLAGS} --syntax-only $$file; \
 	done
 
 format :
-	@find * \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} +;
+	find * \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} +;
 
 clear :
-	@rm -f *.asm *.sym *.lst *.rel *.lk *.rst *.map *.ihx
-	@rm -rf ${DIR}
+	rm -f *.asm *.sym *.lst *.rel *.lk *.rst *.map *.ihx
+	rm -rf ${DIR}
