@@ -31,10 +31,10 @@ What implemented?
 To-Do
 -----
 
-* Rewrite all code to the MISRA C:2012 (In Priority)
 * I2C
 * SWIM
+* Timers
 * Watchdogs
-* Beep
+* Beeper
 * ADC
    
