@@ -115,24 +115,27 @@ error_t uart_mode_set(const uart_mode_t mode)
         status = INVALID_ARG;
     }
 
-    if (mode == UART_MODE_RECEIVER)
+    if (status == OK)
     {
-        UART->CR2 |= (1U << 2U);
-    }
+        if (mode == UART_MODE_RECEIVER)
+        {
+            UART->CR2 |= (1U << 2U);
+        }
 
-    if (mode == UART_MODE_TRANSMITTER)
-    {
-        UART->CR2 |= (1U << 3U);
-    }
+        if (mode == UART_MODE_TRANSMITTER)
+        {
+            UART->CR2 |= (1U << 3U);
+        }
 
-    if (mode == UART_MODE_FULLDUPLEX)
-    {
-        UART->CR2 |= ((1U << 3U) | (1U << 2U));
-    }
+        if (mode == UART_MODE_FULLDUPLEX)
+        {
+            UART->CR2 |= ((1U << 3U) | (1U << 2U));
+        }
 
-    if (mode == UART_MODE_NONE)
-    {
-        UART->CR2 &= ~((1U << 3U) | (1U << 2U));
+        if (mode == UART_MODE_NONE)
+        {
+            UART->CR2 &= ~((1U << 3U) | (1U << 2U));
+        }
     }
 
     return status;
