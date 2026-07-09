@@ -7,7 +7,9 @@
     do                                                                    \
     {                                                                     \
         if (!(x))                                                         \
+        {                                                                 \
             error_signal_start();                                         \
+        }                                                                 \
     } while (0)
 
 typedef enum errors
