@@ -22,6 +22,28 @@ typedef struct
     volatile unsigned char PECR;   /* Packet Error Checking Register */
 } i2c_t;
 
+typedef enum
+{
+    I2C_FREQ_1MHz = 0x01U,
+    I2C_FREQ_2MHz = 0x02U,
+    I2C_FREQ_3MHz = 0x03U,
+    I2C_FREQ_4MHz = 0x04U
+} i2c_freq_t;
+
+typedef enum
+{
+    I2C_FLAGS_TX = 0x80U,
+    I2C_FLAGS_RXNE = 0x40U,
+    I2C_FLAGS_RESERVED = 0x20U,
+    I2C_FLAGS_STOPF = 0x10U,
+    I2C_FLAGS_ADD10 = 0x08U,
+    I2C_FLAGS_BTF = 0x04U,
+    I2C_FLAGS_ADDR = 0x02U,
+    I2C_FLAGS_SB = 0x01U
+} i2c_flags_t;
+
+void i2c_init(i2c_freq_t freq);
+unsigned char i2c_read(void);
 void i2c_deinit(void);
 
 #endif /* I2C_H */
