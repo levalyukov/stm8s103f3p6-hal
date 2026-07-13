@@ -189,6 +189,7 @@ static void uart_baudrate_set(const uart_baudrate_t baudrate)
 
 void uart_deinit(void)
 {
+    CLOCK->PCKENR1 &= ~CLK_GATING_UART1;
     UART->SR = 0xC0;
     UART->DR = 0x00; /* in reference manual written 0xXX */
     UART->BRR1 = 0x00;
