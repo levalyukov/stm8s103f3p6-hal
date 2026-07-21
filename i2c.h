@@ -1,6 +1,9 @@
 #ifndef I2C_H
 #define I2C_H
 
+#include "clock.h"
+#include "error.h"
+
 /* cppcheck-suppress misra-c2012-11.4 */
 #define I2C ((volatile i2c_t *)0x005210)
 
@@ -32,7 +35,7 @@ typedef enum
 
 typedef enum
 {
-    I2C_FLAGS_TX = 0x80U,
+    I2C_FLAGS_TXE = 0x80U,
     I2C_FLAGS_RXNE = 0x40U,
     I2C_FLAGS_RESERVED = 0x20U,
     I2C_FLAGS_STOPF = 0x10U,
@@ -43,6 +46,7 @@ typedef enum
 } i2c_flags_t;
 
 void i2c_init(i2c_freq_t freq);
+void i2c_send(unsigned char data);
 unsigned char i2c_read(void);
 void i2c_deinit(void);
 
