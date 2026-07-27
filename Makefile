@@ -14,7 +14,7 @@ OUT		:= output.ihx
 SRC		:= ${wildcard *.c}
 OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
-.PHONY : all flash build syntax format clear standart
+.PHONY : all flash build syntax format clear misra
 
 all : build flash
 
@@ -33,7 +33,7 @@ build : syntax ${DIR} ${OBJ} ${OUT}
 flash : ${DIR}/${OUT}
 	${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${OUT}
 
-standart :
+misra :
 	${CCHECK} ${CCHECKF} .
 
 syntax : ${SRC}
