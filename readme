@@ -32,8 +32,9 @@ To-Do
 -----
 
 * I2C
+* AWU
 * SWIM
-* Timers
+* Timer1, Timer2, Timer4
 * Watchdogs
 * Beeper
 * ADC
