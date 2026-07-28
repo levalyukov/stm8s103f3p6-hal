@@ -10,8 +10,8 @@ error_t uart_init(const uart_baudrate_t baudrate,
 {
     error_t status = OK;
 
-    if (!UART_BAUDRATE_IS_OK(baudrate) || !UART_WORD_IS_OK(word_length) ||
-        !UART_PARITY_IS_OK(parity) ||
+    if (!UART_BAUDRATE_IS_OK(baudrate) ||
+        !UART_WORD_IS_OK(word_length) || !UART_PARITY_IS_OK(parity) ||
         !UART_PARITY_SELECTION_IS_OK(selection) ||
         !UART_STOPBIT_IS_OK(stopbit))
     {
@@ -23,6 +23,8 @@ error_t uart_init(const uart_baudrate_t baudrate,
         CLOCK->PCKENR1 |= CLK_GATING_UART1;
         UART->CR1 |= parity;
         UART->CR1 |= word_length;
+
+        /* the datasheet requires BRR1 to be written after BRR2 */
         uart_baudrate_set(baudrate);
 
         if (stopbit != UART_STOPBIT_1)
@@ -49,41 +51,21 @@ error_t uart_init(const uart_baudrate_t baudrate,
     return status;
 }
 
-error_t uart_enable(void)
+void uart_enable(void)
 {
-    error_t status = OK;
-
-    if ((UART->CR1 & (1U << 5U)) == 1U)
-    {
-        UART->CR1 &= ~(1U << 5U);
-    }
-    else
-    {
-        status = FAIL;
-    }
-
-    return status;
+    /* The datasheet says 0 bit - enable periphery */
+    UART->CR1 &= ~(1U << 5U);
 }
 
-error_t uart_disable(void)
+void uart_disable(void)
 {
-    error_t status = OK;
-
-    if ((UART->CR1 & ~(1U << 5U)) == 1U)
-    {
-        UART->CR1 |= (1U << 5U);
-    }
-    else
-    {
-        status = FAIL;
-    }
-
-    return status;
+    UART->CR1 |= (1U << 5U);
 }
 
 error_t uart_send(const unsigned char data)
 {
     error_t status = OK;
+
     if ((UART->CR1 & ~(1U << 5U)) == 1U)
     {
         UART->DR = data;
@@ -143,6 +125,7 @@ error_t uart_mode_set(const uart_mode_t mode)
 
 static void uart_baudrate_set(const uart_baudrate_t baudrate)
 {
+    /* i don't understand how to extract the central bits */
     switch (baudrate)
     {
     case UART_BAUDRATE_2400:
