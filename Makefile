@@ -7,7 +7,9 @@ PROGRAMMER	:= stlinkv2
 CCHECK		:= cppcheck
 RPORT		:= report.txt
 SUPPL		:= suppression.txt
-CCHECKF		:= --std=c90 --platform=avr8 --addon=misra.py --enable=all --inline-suppr -I . --suppressions-list=${SUPPL} --checkers-report=${RPORT}
+CCHECKF		:= --std=c90 --platform=avr8 \
+		--addon=misra.py --enable=all --inline-suppr -I . \
+		--suppressions-list=${SUPPL} --checkers-report=${RPORT}
 
 DIR		:= out
 OUT		:= output.ihx
@@ -20,30 +22,39 @@ all : build flash
 
 
 ${DIR} :
-	mkdir -p $@
+	@echo "Creating an output directory ...\n"
+	@mkdir -p $@
 
 ${DIR}/%.rel : %.c
-	${CC} ${CFLAGS} -c $< -o $@
+	@echo "Compiling $< into $@ ..."
+	@${CC} ${CFLAGS} -c $< -o $@
 
 ${OUT} : ${OBJ}
-	${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${OUT}
+	@echo "Link the object files into firmware ..."
+	@${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${OUT}
 
 build : syntax ${DIR} ${OBJ} ${OUT}
 
 flash : ${DIR}/${OUT}
-	${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${OUT}
+	@echo "Updating MCU firmware ..."
+	@${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${OUT}
 
 misra :
-	${CCHECK} ${CCHECKF} .
+	@${CCHECK} ${CCHECKF} .
 
-syntax : ${SRC}
-	for file in ${SRC}; do \
+syntax : ${INC} ${SRC}
+	@echo
+	@for file in ${SRC}; do \
+		echo "Checking $$file syntax ..."; \
 		${CC} ${CFLAGS} --syntax-only $$file; \
 	done
+	@echo
 
 format :
-	find * \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} +;
+	@echo "\nFormatted!"
+	@find * \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} +;
 
 clear :
-	rm -f *.asm *.sym *.lst *.rel *.lk *.rst *.map *.ihx
-	rm -rf ${DIR}
+	@echo "\nCleared!"
+	@rm -f *.asm *.sym *.lst *.rel *.lk *.rst *.map *.ihx
+	@rm -rf ${DIR}
