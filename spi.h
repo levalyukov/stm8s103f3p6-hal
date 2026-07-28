@@ -7,21 +7,21 @@
 /* cppcheck-suppress misra-c2012-11.4 */
 #define SPI ((volatile spi_t *)0x005200)
 
-#define SPI_MODE_IS_OK(mode)                                              \
+#define SPI_MODE_IS_OK(mode)                                         \
     (((mode) == SPI_MODE_SLAVE) || ((mode) == SPI_MODE_MASTER))
 
-#define SPI_BAUD_IS_OK(baud)                                              \
-    (((baud) == SPI_BAUDRATE_2) || ((baud) == SPI_BAUDRATE_4) ||          \
-     ((baud) == SPI_BAUDRATE_8) || ((baud) == SPI_BAUDRATE_16) ||         \
-     ((baud) == SPI_BAUDRATE_32) || ((baud) == SPI_BAUDRATE_64) ||        \
+#define SPI_BAUD_IS_OK(baud)                                         \
+    (((baud) == SPI_BAUDRATE_2) || ((baud) == SPI_BAUDRATE_4) ||     \
+     ((baud) == SPI_BAUDRATE_8) || ((baud) == SPI_BAUDRATE_16) ||    \
+     ((baud) == SPI_BAUDRATE_32) || ((baud) == SPI_BAUDRATE_64) ||   \
      ((baud) == SPI_BAUDRATE_128) || ((baud) == SPI_BAUDRATE_256))
 
-#define SPI_FRAME_FORMAT_IS_OK(frame)                                     \
-    (((frame) == SPI_FRAME_FORMAT_MSB) ||                                 \
+#define SPI_FRAME_FORMAT_IS_OK(frame)                                \
+    (((frame) == SPI_FRAME_FORMAT_MSB) ||                            \
      ((frame) == SPI_FRAME_FORMAT_LSB))
 
-#define SPI_TRANSACTION_TYPE_IS_OK(type)                                  \
-    (((type) == SPI_TRANSACTION_DATA) ||                                  \
+#define SPI_TRANSACTION_TYPE_IS_OK(type)                             \
+    (((type) == SPI_TRANSACTION_DATA) ||                             \
      ((type) == SPI_TRANSACTION_COMMAND))
 
 typedef struct
@@ -68,13 +68,13 @@ typedef enum
 
 typedef enum
 {
-    SPI_FLAG_BSY = 0x80U,    /* Busy flag */
-    SPI_FLAG_OVR = 0x40U,    /* Overrun flag */
-    SPI_FLAG_MODF = 0x20U,   /* Mode fault */
-    SPI_FLAG_CRCERR = 0x10U, /* CRC error flag */
-    SPI_FLAG_WKUP = 0x04U,   /* Wakeup flag */
-    SPI_FLAG_TXE = 0x02U,    /* Transmit buffer not empty */
-    SPI_FLAG_RXNE = 0x01U    /* Receive buffer not empty */
+    SPI_FLAGS_BSY = 0x80U,    /* Busy flag */
+    SPI_FLAGS_OVR = 0x40U,    /* Overrun flag */
+    SPI_FLAGS_MODF = 0x20U,   /* Mode fault */
+    SPI_FLAGS_CRCERR = 0x10U, /* CRC error flag */
+    SPI_FLAGS_WKUP = 0x04U,   /* Wakeup flag */
+    SPI_FLAGS_TXE = 0x02U,    /* Transmit buffer not empty */
+    SPI_FLAGS_RXNE = 0x01U    /* Receive buffer not empty */
 } spi_flags_t;
 
 typedef struct
@@ -87,11 +87,11 @@ typedef struct
 
 error_t spi_init(spi_mode_t mode, spi_baudrate_t baud,
                  spi_frame_format_t frame);
-error_t spi_enable(void);
 error_t spi_send(spi_device_t *device, spi_transaction_t type,
                  unsigned char data);
 unsigned char spi_read(void);
-error_t spi_disable(void);
+void spi_enable(void);
+void spi_disable(void);
 void spi_deinit(void);
 
 #endif /* SPI_H */
