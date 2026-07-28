@@ -33,7 +33,7 @@ ${OUT} : ${OBJ}
 	@echo "Link the object files into firmware ..."
 	@${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${OUT}
 
-build : syntax ${DIR} ${OBJ} ${OUT}
+build : syntax misra ${DIR} ${OBJ} ${OUT}
 
 flash : ${DIR}/${OUT}
 	@echo "Updating MCU firmware ..."
