@@ -11,8 +11,11 @@ CCHECKF		:= --std=c90 --platform=avr8 \
 		--addon=misra.py --enable=all --inline-suppr -I . \
 		--suppressions-list=${SUPPL} --checkers-report=${RPORT}
 
+TEX		:= pdflatex
+PDF		:= document.tex
+
 DIR		:= out
-OUT		:= output.ihx
+HEX		:= output.ihx
 SRC		:= ${wildcard *.c}
 OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
@@ -29,15 +32,15 @@ ${DIR}/%.rel : %.c
 	@echo "Compiling $< into $@ ..."
 	@${CC} ${CFLAGS} -c $< -o $@
 
-${OUT} : ${OBJ}
+${HEX} : ${OBJ}
 	@echo "Link the object files into firmware ..."
-	@${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${OUT}
+	@${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${HEX}
 
 build : syntax misra ${DIR} ${OBJ} ${OUT}
 
 flash : ${DIR}/${OUT}
-	@echo "Updating MCU firmware ..."
-	@${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${OUT}
+	@echo "\nUpdating MCU firmware ..."
+	@${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${HEX}
 
 misra :
 	@${CCHECK} ${CCHECKF} .
@@ -52,9 +55,14 @@ syntax : ${INC} ${SRC}
 
 format :
 	@echo "\nFormatted!"
-	@find * \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} +;
+	@find * \( -name "*.h" -o -name "*.c" \) \
+	-exec clang-format -i {} +;
+
+pdf :
+	@${TEX} ${PDF}
 
 clear :
 	@echo "\nCleared!"
-	@rm -f *.asm *.sym *.lst *.rel *.lk *.rst *.map *.ihx
+	@rm -f *.asm *.sym *.lst *.rel *.lk \
+	*.rst *.map *.ihx *.log *.aux *.pdf
 	@rm -rf ${DIR}
