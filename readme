@@ -2,19 +2,15 @@
 STM8S103F3P6 Hardware Abstraction Layer
     ==============================
 
-This repository is a study project of the HAL for
-stm8s103f3p6 purchased from a electronics shop.
-
-I try to read only original datasheets and reference
-manual from the manufacturer, and write code without AI.
+This repository is a self-made HAL for the STM8S103F3P6.
 
 Tools
 -----
 
-* Language : C90
+* Language : C90, AVR Assembly (for practice), LaTeX
 * Compilier : SDCC (Small Device C Compilier) with pedantics flags
 * Build : Makefile, program ST-LINK V2, stm8sflash software, clang-format
-* Checker : Cppcheck with addon - MISRA C:2012
+* Checker : Cppcheck with addon MISRA C:2012
 * Text Editor : Emacs
 * Coding Style : Allman
 
@@ -38,4 +34,3 @@ To-Do
 * Watchdogs
 * Beeper
 * ADC
-   
