@@ -12,7 +12,7 @@ CCHECKF		:= --std=c90 --platform=avr8 \
 		--suppressions-list=${SUPPL} --checkers-report=${RPORT}
 
 TEX		:= pdflatex
-PDF		:= document.tex
+PDF		:= docs/tex/document.tex
 
 DIR		:= out
 HEX		:= output.ihx
