@@ -16,3 +16,4 @@ main.c
 *.aux
 *.log
 *.pdf
+*.out

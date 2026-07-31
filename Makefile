@@ -4,12 +4,12 @@ FLASH		:= stm8flash
 DEVICE		:= stm8s103f3
 PROGRAMMER	:= stlinkv2
 
-CCHECK		:= cppcheck
-RPORT		:= report.txt
+CHECK		:= cppcheck
+REPORT		:= report.txt
 SUPPL		:= suppression.txt
-CCHECKF		:= --std=c90 --platform=avr8 \
+CHECKF		:= --std=c90 --platform=avr8 \
 		--addon=misra.py --enable=all --inline-suppr -I . \
-		--suppressions-list=${SUPPL} --checkers-report=${RPORT}
+		--suppressions-list=${SUPPL} --checkers-report=${REPORT}
 
 TEX		:= pdflatex
 PDF		:= docs/tex/document.tex
@@ -43,7 +43,7 @@ flash : ${DIR}/${OUT}
 	@${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${HEX}
 
 misra :
-	@${CCHECK} ${CCHECKF} .
+	@${CHECK} ${CHECKF} .
 
 syntax : ${INC} ${SRC}
 	@echo
@@ -59,10 +59,11 @@ format :
 	-exec clang-format -i {} +;
 
 pdf :
-	@${TEX} ${PDF}
+	@${MAKE} -C docs/tex
 
 clear :
 	@echo "\nCleared!"
 	@rm -f *.asm *.sym *.lst *.rel *.lk \
 	*.rst *.map *.ihx *.log *.aux *.pdf
+	@${MAKE} -C docs/tex clear
 	@rm -rf ${DIR}
