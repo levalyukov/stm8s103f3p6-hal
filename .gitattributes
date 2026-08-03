@@ -1,4 +1,4 @@
-docs/tex/*.tex linguist-language=TeX
-docs/tex/*.tex linguist-documentation=false
-docs/tex/*.tex linguist-vendor=false
-docs/tex/*.tex linguist-detectable=true
+*.tex linguist-language=TeX
+*.tex linguist-documentation=false
+*.tex linguist-vendor=false
+*.tex linguist-detectable=true
