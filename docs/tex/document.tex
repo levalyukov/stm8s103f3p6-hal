@@ -9,24 +9,33 @@
 \usepackage{indentfirst}
 \usepackage[T2A]{fontenc}
 \usepackage[english]{babel}
-
 \parindent=1.25cm
-\lstloadlanguages{[LaTeX]Tex} 
-\lstset{
-    basicstyle=\ttfamily\small,  
-    explpreset={numbers=none},
-    breaklines=true
-} 
 
-
-\title{A custom HAL for the STM8S103F3P6 microcontroller}
+\title{A custom Hardware Abstraction Layer for the STM8S103F3P6 microcontroller}
 \author{Lev Alyukov}
 \date{July 31, 2026}
 
 \begin{document}
-\maketitle
+\maketitle 
 
-\section{Introduction}
-As a hobby, I wrote a custom HAL for the 8-bit MCU from scratch. First of all, it's a study project, so I could write inefficient code but I will be glad if you submit a pull request with better code. Thanks!
+In this documentation I explain the princtiple of my HAL. The HAL was \
+developed from scratch in C90 and automated using a Makefile, formatting code using clang-format. \
+I use the datasheets by STMicroelectronics and an original HAL as a reference.\
+First of all, it's a study project, so I could write inefficient \
+code but I will be glad if you submit a pull request with better code. Thanks!
+
+\section{Get Started}
+
+For begin to working, you need to have:
+
+\begin{enumerate}
+\item The STM8S103F3P6 microcontroller
+\item The ST-Link v2 debugger/programmer
+\item Small Device C Compilier (SDCC)
+\item GNU Make
+\end{enumerate}
+
+If you have it --- well, we can move on the next steps.
 
 \end{document}
+ 
