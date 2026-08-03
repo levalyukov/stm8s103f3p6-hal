@@ -2,7 +2,7 @@
 STM8S103F3P6 Hardware Abstraction Layer
     ==============================
 
-This repository is a self-made HAL for the STM8S103F3P6.
+This project is a custom HAL from the STM8S103F3P6 MCU.
 
 Tools
 -----
