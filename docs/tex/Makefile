@@ -8,4 +8,4 @@ pdf :
 	@mv ${patsubst %.tex, %.pdf, ${PDF}} ../../
 
 clear :
-	@rm -rf *.pdf *.log *.aux
+	@rm -rf *.pdf *.log *.aux *.out
