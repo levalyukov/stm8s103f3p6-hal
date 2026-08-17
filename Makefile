@@ -1,5 +1,5 @@
 CC		:= sdcc
-CFLAGS		:= -mstm8 --std-c90 --Werror -pedantic
+CFLAGS		:= -mstm8 --std-c90 --Werror -pedantic -I .
 FLASH		:= stm8flash
 DEVICE		:= stm8s103f3
 PROGRAMMER	:= stlinkv2
@@ -11,15 +11,12 @@ CHECKF		:= --std=c90 --platform=avr8 \
 		--addon=misra.py --enable=all --inline-suppr -I . \
 		--suppressions-list=${SUPPL} --checkers-report=${REPORT}
 
-TEX		:= pdflatex
-PDF		:= docs/tex/document.tex
-
 DIR		:= out
 HEX		:= output.ihx
 SRC		:= ${wildcard *.c}
 OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
-.PHONY : all flash build syntax format clear misra
+.PHONY : flash syntax format clear misra
 
 all : build flash
 
@@ -45,7 +42,7 @@ flash : ${DIR}/${OUT}
 misra :
 	@${CHECK} ${CHECKF} .
 
-syntax : ${INC} ${SRC}
+syntax : ${SRC}
 	@echo
 	@for file in ${SRC}; do \
 		echo "Checking $$file syntax ..."; \
@@ -59,11 +56,11 @@ format :
 	-exec clang-format -i {} +;
 
 pdf :
-	@${MAKE} -C docs/tex
+	@${MAKE} -C docs/
 
 clear :
 	@echo "\nCleared!"
 	@rm -f *.asm *.sym *.lst *.rel *.lk \
 	*.rst *.map *.ihx *.log *.aux *.pdf
-	@${MAKE} -C docs/tex clear
+	@${MAKE} -C docs/ clear
 	@rm -rf ${DIR}
