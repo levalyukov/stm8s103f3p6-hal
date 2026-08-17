@@ -28,10 +28,10 @@ static void error_pin_reset(void)
     unsigned char i;
     for (i = 0; i < (unsigned char)(sizeof(GPIOS) / sizeof(GPIOS[0])); i++)
     {
-        (*GPIOS[i]).ODR = 0x00;
-        (*GPIOS[i]).IDR = 0x00;
-        (*GPIOS[i]).DDR = 0x00;
-        (*GPIOS[i]).CR1 = 0x00;
-        (*GPIOS[i]).CR2 = 0x00;
+        GPIOS[i]->ODR = 0x00;
+        GPIOS[i]->IDR = 0x00;
+        GPIOS[i]->DDR = 0x00;
+        GPIOS[i]->CR1 = 0x00;
+        GPIOS[i]->CR2 = 0x00;
     }
 }
