@@ -7,30 +7,18 @@ This project is a custom HAL from the STM8S103F3P6 MCU.
 Tools
 -----
 
-* Language : C90, AVR Assembly (for practice), LaTeX
+* Language : C90, AVR Assembly (for practice), LaTeX for documentation
 * Compilier : SDCC (Small Device C Compilier) with pedantics flags
 * Build : Makefile, program ST-LINK V2, stm8sflash software, clang-format
-* Checker : Cppcheck with addon MISRA C:2012
+* Checker : Cppcheck with MISRA C:2012 addon
 * Text Editor : Emacs
 * Coding Style : Allman
 
 
 What is implemented?
------------------
+--------------------
 
-* Documentation - docs/
 * Custom assertions - error.h
 * General purpose input/output - gpio.h
 * Serial peripheral interface - spi.h
 * Universal Asynchronous Receiver-Transmitter - uart.h
-
-To-Do
------
-
-* I2C
-* AWU
-* SWIM
-* Timer1, Timer2, Timer4
-* Watchdogs
-* Beeper
-* ADC
