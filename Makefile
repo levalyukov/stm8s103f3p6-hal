@@ -18,7 +18,7 @@ OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
 .PHONY : flash syntax format clear misra
 
-all : build flash
+all : build ${HEX} flash
 
 
 ${DIR} :
