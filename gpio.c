@@ -5,12 +5,7 @@ error_t gpio_level_set(gpio_t *gpio, const unsigned char pin,
 {
     error_t status = OK;
 
-    if (!GPIO_PIN_IS_OK(pin))
-    {
-        status = INVALID_ARG;
-    }
-
-    if (!GPIO_LEVEL_IS_OK(level))
+    if (!GPIO_PIN_IS_OK(pin) || !GPIO_LEVEL_IS_OK(level))
     {
         status = INVALID_ARG;
     }
@@ -47,12 +42,7 @@ error_t gpio_direction_set(gpio_t *gpio, const unsigned char pin,
 {
     error_t status = OK;
 
-    if (!GPIO_PIN_IS_OK(pin))
-    {
-        status = INVALID_ARG;
-    }
-
-    if (!GPIO_DIRECTION_IS_OK(direction))
+    if (!GPIO_PIN_IS_OK(pin) || !GPIO_DIRECTION_IS_OK(direction))
     {
         status = INVALID_ARG;
     }
@@ -75,17 +65,9 @@ error_t gpio_input_config_set(gpio_t *gpio, const unsigned char pin,
 {
     error_t status = OK;
 
-    if (!GPIO_PIN_IS_OK(pin))
-    {
-        status = INVALID_ARG;
-    }
-
-    if ((gpio->ODR & (1U << pin)) != 0U)
-    {
-        status = INVALID_ARG;
-    }
-
-    if (!GPIO_INPUT_CONFIG_IS_OK(value_1, value_2))
+    if (!GPIO_PIN_IS_OK(pin) ||
+        !GPIO_INPUT_CONFIG_IS_OK(value_1, value_2) ||
+        (gpio->ODR & (1U << pin)) != 0U)
     {
         status = INVALID_ARG;
     }
@@ -117,16 +99,9 @@ error_t gpio_output_config_set(gpio_t *gpio, const unsigned char pin,
 {
     error_t status = OK;
 
-    if (!GPIO_PIN_IS_OK(pin))
-    {
-        status = INVALID_ARG;
-    }
-
-    if ((gpio->IDR & (1U << pin)) != 0U)
-    {
-        status = INVALID_ARG;
-    }
-    if (GPIO_OUTPUT_CONFIG_IS_OK(value_1, value_2))
+    if (!GPIO_PIN_IS_OK(pin) ||
+        GPIO_OUTPUT_CONFIG_IS_OK(value_1, value_2) ||
+        (gpio->IDR & (1U << pin)) != 0U)
     {
         status = INVALID_ARG;
     }

@@ -1,8 +1,8 @@
-#ifndef GPIO_H
-#define GPIO_H
+#ifndef GPIO_MODULE
+#define GPIO_MODULE
 
 #include "error.h"
-#include "mcu_pins_layout.h"
+#include "mcu_pins.h"
 
 #define GPIO_PIN_IS_OK(pin) (((pin) < 8U) ? 1U : 0U)
 #define GPIO_LEVEL_IS_OK(level) (((level) == LOW) || ((level) == HIGH))
@@ -56,4 +56,4 @@ error_t gpio_output_config_set(gpio_t *gpio, unsigned char pin,
                                gpio_output_config_t value_2);
 void gpio_reset(void);
 
-#endif /* GPIO_H */
+#endif /* GPIO_MODULE */
