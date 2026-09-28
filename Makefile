@@ -1,5 +1,5 @@
 CC		:= sdcc
-CFLAGS		:= -mstm8 --std-c90 --Werror -pedantic -I .
+CFLAGS		:= --opt-code-size -mstm8 --std-c90 --Werror -pedantic -I .
 FLASH		:= stm8flash
 DEVICE		:= stm8s103f3
 PROGRAMMER	:= stlinkv2
@@ -20,7 +20,6 @@ OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
 all : build ${HEX} flash
 
-
 ${DIR} :
 	@echo "Creating an output directory ...\n"
 	@mkdir -p $@
@@ -33,7 +32,7 @@ ${HEX} : ${OBJ}
 	@echo "Link the object files into firmware ..."
 	@${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${HEX}
 
-build : syntax misra ${DIR} ${OBJ} ${OUT}
+build : syntax misra ${DIR} ${OBJ} ${OUT} ${HEX}
 
 flash : ${DIR}/${OUT}
 	@echo "\nUpdating MCU firmware ..."
