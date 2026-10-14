@@ -1,9 +1,7 @@
 #ifndef SPI_H
 #define SPI_H
 
-#include "error.h"
 #include <power/clock.h>
-
 /* cppcheck-suppress misra-c2012-11.4 */
 #define SPI ((volatile spi_t *)0x005200)
 
@@ -12,7 +10,7 @@ typedef struct
     volatile unsigned char CR1;    /* Control Register 1 */
     volatile unsigned char CR2;    /* Control Register 2 */
     volatile unsigned char ICR;    /* Interrupt Control Register */
-    volatile unsigned char SR;     /* Status Register */
+    const volatile unsigned char SR;     /* Status Register */
     volatile unsigned char DR;     /* Data Register */
     volatile unsigned char CRCPR;  /* CRC Polynomial Register */
     volatile unsigned char RXCRCR; /* Rx CRC Register */
