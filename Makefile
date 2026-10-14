@@ -13,24 +13,29 @@ CHECKF		:= --std=c90 --platform=avr8 \
 
 DIR		:= out
 HEX		:= output.ihx
-SRC		:= ${wildcard *.c}
+
+SRC		+= ${wildcard interfaces/*.c}
+SRC		+= ${wildcard power/*.c}
+SRC		+= ${wildcard *.c}
+
 OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
 .PHONY : flash syntax format clear misra
 
 all : build ${HEX} flash
 
+
 ${DIR} :
 	@echo "Creating an output directory ...\n"
 	@mkdir -p $@
 
 ${DIR}/%.rel : %.c
-	@echo "Compiling $< into $@ ..."
-	@${CC} ${CFLAGS} -c $< -o $@
+	@echo "Compiling $< into ${DIR}/${notdir $@} ..."
+	@${CC} ${CFLAGS} -c $< -o ${DIR}/${notdir $@}
 
 ${HEX} : ${OBJ}
 	@echo "Link the object files into firmware ..."
-	@${CC} ${CFLAGS} ${OBJ} -o ${DIR}/${HEX}
+	@${CC} ${CFLAGS} ${patsubst %.rel, ${DIR}/%.rel, ${notdir ${OBJ}}} -o ${DIR}/${HEX}
 
 build : syntax misra ${DIR} ${OBJ} ${OUT} ${HEX}
 
