@@ -1,0 +1,94 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{tempora}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{fancyvrb}
+\usepackage{showexpl}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage[T2A]{fontenc}
+\usepackage[english]{babel}
+\linespread{1.25}
+\usepackage[skip=10pt plus1pt, indent=40pt]{parskip}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+\lstset {
+    language=C,
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,          
+    captionpos=b,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4
+}
+
+\title{A custom Hardware Abstraction Layer for the STM8S103F3P6 microcontroller}
+\author{Lev Alyukov \\ \texttt{lev.alyukov@gmail.com}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+In this documentation I explain the princtiple of my HAL. The HAL was\
+developed from scratch in C90 and automated using a Makefile, formatting code using clang-format.\
+I use the datasheets by STMicroelectronics and an original HAL as a reference.\
+First of all, it's a study project, so I could write inefficient\
+code but I will be glad if you submit a pull request with better code. Thanks!
+
+For begin to working, you need to have: The STM8S103F3P6 microcontroller, ST-Link v2 debugger/programmer, 4 socket-to-socket jumper wires, Small Device C Compilier (SDCC), STM8SFLASH Software, GNU Make, Cppcheck and Git version control. If you have it --- well, we can move on the next steps.
+
+\newpage
+
+\subsection{Build and flashing of the MCU}
+
+For such tasks I using a classic GNU Makefile:
+
+\begin{lstlisting}
+make <target>
+\end{lstlisting}
+
+Where the target is:
+
+\begin{center}
+  \begin{tabular}{|l|l|}
+    \hline
+    Target & Description\\
+    \hline
+    \texttt{all} & Syntax check of files, linking and compile, flashing received the HEX file.\\
+    \hline
+    \texttt{build} & Only linking and compile files only.\\
+    \hline
+    \texttt{flash} & Flash HEX file only.\\
+    \hline
+    \texttt{syntax} & Syntax check of files only.\\
+    \hline
+    \texttt{format} & Files formatting.\\
+    \hline
+    \texttt{clear} & Cleaning all an object files.\\
+    \hline
+    \texttt{misra} & Run the MISRA C:2012 standard.\\
+    \hline
+    \texttt{pdf} & Compilie a PDF file from TeX.\\
+    \hline
+  \end{tabular}
+\end{center}
+
+\end{document}
+ 
