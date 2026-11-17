@@ -1,32 +1,29 @@
+DIR		:= out
+HEX		:= firmware.ihx
+INC		:= ${wildcard inc/*.h}
+SRC		+= ${wildcard src/*.c}
+SRC		+= main.c
+OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
+
 CC		:= sdcc
-CFLAGS		:= --opt-code-size -mstm8 --std-c90 --Werror -pedantic -I .
+CFLAGS		+= --opt-code-size -mstm8 --std-c90 --Werror 
+CFLAGS		+= -pedantic -DSTM8S103F3P6_HAL -I inc
 FLASH		:= stm8flash
 DEVICE		:= stm8s103f3
 PROGRAMMER	:= stlinkv2
 
 CHECK		:= cppcheck
 REPORT		:= report.txt
-SUPPL		:= suppression.txt
-CHECKF		:= --std=c90 --platform=avr8 \
-		--addon=misra.py --enable=all --inline-suppr -I . \
-		--suppressions-list=${SUPPL} --checkers-report=${REPORT}
+SPPLSS		:= suppression.txt
+CHECKF		+= --std=c90 --platform=avr8 -DSTM8S103F3P6_HAL -Iinc
+CHECKF		+= --suppressions-list=${SPPLSS} --checkers-report=${REPORT}
+CHECKF		+= --addon=misra.py --enable=all --inline-suppr
 
-DIR		:= out
-HEX		:= output.ihx
-
-SRC		+= ${wildcard interfaces/*.c}
-SRC		+= ${wildcard power/*.c}
-SRC		+= ${wildcard *.c}
-
-OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
-
-.PHONY : flash syntax format clear misra
+.PHONY : build flash syntax format clear misra
 
 all : build ${HEX} flash
 
-
 ${DIR} :
-	@echo "Creating an output directory ...\n"
 	@mkdir -p $@
 
 ${DIR}/%.rel : %.c
@@ -34,28 +31,26 @@ ${DIR}/%.rel : %.c
 	@${CC} ${CFLAGS} -c $< -o ${DIR}/${notdir $@}
 
 ${HEX} : ${OBJ}
-	@echo "Link the object files into firmware ..."
-	@${CC} ${CFLAGS} ${patsubst %.rel, ${DIR}/%.rel, ${notdir ${OBJ}}} -o ${DIR}/${HEX}
+	@${CC} ${CFLAGS} ${patsubst %.rel, ${DIR}/%.rel, ${notdir ${OBJ}}} \
+	-o ${DIR}/${HEX}
 
-build : syntax misra ${DIR} ${OBJ} ${OUT} ${HEX}
+build : syntax misra ${DIR} ${OBJ} ${OUT}
 
 flash : ${DIR}/${OUT}
 	@echo "\nUpdating MCU firmware ..."
 	@${FLASH} -c ${PROGRAMMER} -p ${DEVICE} -w ${DIR}/${HEX}
 
-misra :
-	@${CHECK} ${CHECKF} .
+misra : ${SRC}
+	@${CHECK} ${CHECKF} src/
 
 syntax : ${SRC}
 	@echo
 	@for file in ${SRC}; do \
-		echo "Checking $$file syntax ..."; \
 		${CC} ${CFLAGS} --syntax-only $$file; \
 	done
 	@echo
 
 format :
-	@echo "\nFormatted!"
 	@find * \( -name "*.h" -o -name "*.c" \) \
 	-exec clang-format -i {} +;
 
@@ -63,7 +58,6 @@ pdf :
 	@${MAKE} -C docs/
 
 clear :
-	@echo "\nCleared!"
 	@rm -f *.asm *.sym *.lst *.rel *.lk \
 	*.rst *.map *.ihx *.log *.aux *.pdf
 	@${MAKE} -C docs/ clear
