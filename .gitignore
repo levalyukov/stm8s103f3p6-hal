@@ -9,11 +9,11 @@
 *.ihx
 *.lk
 *.map
-build/
-.DS_Store
-report.txt
-main.c
 *.aux
 *.log
 *.pdf
 *.out
+.DS_Store
+report.txt
+main.c
+build/
