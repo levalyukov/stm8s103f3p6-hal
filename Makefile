@@ -2,7 +2,6 @@ DIR		:= out
 HEX		:= firmware.ihx
 INC		:= ${wildcard inc/*.h}
 SRC		+= ${wildcard src/*.c}
-SRC		+= main.c
 OBJ		:= ${patsubst %.c, ${DIR}/%.rel, ${SRC}}
 
 CC		:= sdcc
@@ -44,11 +43,9 @@ misra : ${SRC}
 	@${CHECK} ${CHECKF} src/
 
 syntax : ${SRC}
-	@echo
 	@for file in ${SRC}; do \
 		${CC} ${CFLAGS} --syntax-only $$file; \
 	done
-	@echo
 
 format :
 	@find * \( -name "*.h" -o -name "*.c" \) \
