@@ -3,7 +3,7 @@ In development:
 - I2C
 - AWU
 - SWIM
-- Timer1, Timer2, Timer4
+- Timer1, Timer2
 - Watchdogs
 - Beeper
 - ADC
