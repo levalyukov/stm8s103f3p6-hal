@@ -9,16 +9,14 @@ void gpio_reset_pin(gpio_t* port, unsigned char pin)
     port->CR2 &= ~(1U << pin);
 }
 
-void gpio_level_set(gpio_t* port, unsigned char pin, unsigned char level)
+void gpio_level_high(gpio_t* port, unsigned char pin)
 {
-    if (level == 0x1U)
-    {
-        port->ODR |= ((level&0x1U) << pin);
-    }
-    else
-    {
-        port->ODR &= ~((level&0x1U) << pin);
-    }
+    port->ODR |= (1U << pin);
+}
+
+void gpio_level_low(gpio_t* port, unsigned char pin)
+{
+    port->ODR &= ~(1U << pin);
 }
 
 void gpio_direction_set(gpio_t* port,
