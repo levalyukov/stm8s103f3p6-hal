@@ -2,12 +2,7 @@
 #include <spi.h>
 
 void spi_init(const spi_config_t* config, const spi_device_t* device)
-{
-    device->port_cs->CR1 &= ~(1U << device->pin_cs);
-    device->port_cs->CR2 &= ~(1U << device->pin_cs);
-    device->port_cs->DDR |= (1U << device->pin_cs);
-    device->port_dc->DDR |= (1U << device->pin_dc);
-    
+{    
     SPI->CR1 |= config->baudrate&0x38U;
     SPI->CR1 |= config->frame&0x80U;
     SPI->CR1 |= config->mode&0x04U;
