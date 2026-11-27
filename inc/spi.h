@@ -7,16 +7,13 @@
 /* cppcheck-suppress misra-c2012-11.4 */
 #define SPI ((volatile spi_t *)0x005200)
 
-#define SPI_MODE_SLAVE   ~(1U << 4U)
+#define SPI_MODE_SLAVE   ~(1U << 4U)&0xFFU
 #define SPI_MODE_MASTER   (1U << 4U)
-
-#define SPI_FRAME_MSB    ~(1U << 7U)
+#define SPI_FRAME_MSB    ~(1U << 7U)&0xFFU
 #define SPI_FRAME_LSB     (1U << 7U)
-
-#define SPI_SCK_LOW      ~(1U << 1U)
+#define SPI_SCK_LOW      ~(1U << 1U)&0xFFU
 #define SPI_SCK_HIGH      (1U << 1U)
-
-#define SPI_PHASE_FIRST  ~(1U << 0U)
+#define SPI_PHASE_FIRST  ~(1U << 0U)&0xFFU
 #define SPI_PHASE_SECOND  (1U << 0U)
 
 #define SPI_BAUDRATE_2    0x00U
@@ -37,14 +34,14 @@
 #define SPI_FLAG_RXNE     (1U << 0U)
 
 /* bidirectional mode */
-#define SPI_BDM_2_LINE   ~(1U << 7U)
+#define SPI_BDM_2_LINE   ~(1U << 7U)&0xFFU
 #define SPI_BDM_1_LINE    (1U << 7U)
 /* only reciver or output if bdm is set to 1 */
-#define SPI_RECIVE_ONLY  ~(1U << 6U)
+#define SPI_RECIVE_ONLY  ~(1U << 6U)&0xFFU
 #define SPI_TRANSMIT_ONLY (1U << 6U)
 
 #define SPI_ENABLE        (1U << 6U)
-#define SPI_DISABLE      ~(1U << 6U)
+#define SPI_DISABLE      ~(1U << 6U)&0xFFU
 
 typedef struct
 {
